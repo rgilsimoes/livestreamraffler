@@ -4,6 +4,10 @@ module.exports = {
   separator: ":",
   theme: {
     extend: {
+      fontFamily: {
+        nunito: ["Nunito", "sans-serif"],
+        abel: ["Abel"]
+      },
       colors: {
         tuna: {
           "50": "#f5f5f6",

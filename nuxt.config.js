@@ -15,11 +15,12 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     "~/assets/scss/tailwind.scss",
-    "@fortawesome/fontawesome-svg-core/styles.css"
+    "~/assets/scss/main.scss",
+    "@fortawesome/fontawesome-free/css/all.css"
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ["~/plugins/fontawesome.js"],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -30,7 +31,7 @@ export default {
     "@nuxt/typescript-build",
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
-    "nuxt-fontawesome"
+    "@nuxtjs/firebase"
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -39,7 +40,8 @@ export default {
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
-    "nuxt-purgecss"
+    "nuxt-purgecss",
+    "vue-toastification/nuxt"
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -47,8 +49,52 @@ export default {
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
-    manifest: {
-      lang: "en"
+    // disable the modules you don't need
+    meta: false,
+    icon: false,
+    // if you omit a module key form configuration sensible defaults will be applied
+    // manifest: false,
+
+    workbox: {
+      importScripts: [
+        // ...
+        "/firebase-auth-sw.js"
+      ],
+      // by default the workbox module will not install the service worker in dev environment to avoid conflicts with HMR
+      // only set this true for testing and remember to always clear your browser cache in development
+      dev: process.env.NODE_ENV === "development"
+    }
+  },
+
+  firebase: {
+    lazy: false,
+    config: {
+      apiKey: "AIzaSyCyK_ta-EMdTydst9bNw3H13TUNmM0xTAk",
+      authDomain: "rafle.firebaseapp.com",
+      databaseURL: "https://youtube-rafle.firebaseio.com",
+      projectId: "youtube-rafle",
+      appId: "1:890703150532:web:9b48157da5561e79547891",
+      measurementId: "",
+      storageBucket: "youtube-rafles.appspot.com",
+      messagingSenderId: "890703150532"
+    },
+    onFirebaseHosting: false,
+    services: {
+      auth: {
+        initialize: {
+          onAuthStateChangedAction: "firebaseAuth/onAuthStateChanged"
+        },
+        ssr: true,
+        emulatorPort: process.env.NODE_ENV === "development" ? 9099 : undefined,
+        disableEmulatorWarnings: true
+      },
+      firestore: {
+        memoryOnly: false,
+        //enablePersistence: true,
+        emulatorPort: process.env.NODE_ENV === "development" ? 8080 : undefined
+      },
+      performance: true,
+      analytics: true
     }
   },
 
@@ -63,18 +109,12 @@ export default {
   },
   purgeCSS: { mode: "postcss" },
 
-  fontawesome: {
-    component: "fa",
-    imports: [
-      //import whole set
-      {
-        set: "@fortawesome/free-solid-svg-icons",
-        icons: ["fas"]
-      },
-      {
-        set: "@fortawesome/free-regular-svg-icons",
-        icons: ["far"]
-      }
-    ]
+  toast: {
+    timeout: 3000,
+    draggable: false,
+    closeOnClick: true,
+    transition: "Vue-Toastification__fade",
+    maxToasts: 10,
+    newestOnTop: true
   }
 };

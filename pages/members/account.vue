@@ -12,7 +12,7 @@
         <div class="max-w-sm mx-auto md:w-full md:mx-0">
           <div class="inline-flex items-center space-x-4">
             <h1 class="text-xl font-semibold text-gray-600 font-abel">
-              Introduz os teus dados
+              Dados da conta
             </h1>
           </div>
         </div>

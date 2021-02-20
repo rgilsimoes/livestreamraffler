@@ -1,15 +1,27 @@
 <template>
-  <div>
+  <div class="flex flex-col h-screen">
     <Header />
 
     <header class="bg-white shadow">
       <div class="px-4 py-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold leading-tight text-gray-900">Hoje pode ser o teu dia de sorte!</h1>
+        <h1
+          class="text-3xl font-extrabold leading-tight text-gray-900 font-nunito"
+        >
+          Hoje pode ser o teu dia de sorte!
+        </h1>
       </div>
     </header>
 
-    <Nuxt />
-
+    <!-- Main Area -->
+    <main class="h-full">
+      <div class="h-full py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="h-full px-4 sm:px-0">
+          <div class="h-full border-4 border-gray-200 border-dashed rounded-lg">
+            <Nuxt />
+          </div>
+        </div>
+      </div>
+    </main>
     <Footer />
   </div>
 </template>

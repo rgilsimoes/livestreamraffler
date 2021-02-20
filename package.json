@@ -8,15 +8,21 @@
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint": "npm run lint:js"
+    "lint": "npm run lint:js",
+    "emulators": "firebase emulators:start --import=./fbemulatordata --export-on-exit"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@nuxt/typescript-runtime": "^2.0.1",
     "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/firebase": "^7.4.1",
     "@nuxtjs/pwa": "^3.3.5",
+    "@nuxtjs/toast": "^3.3.1",
     "core-js": "^3.8.3",
-    "nuxt": "^2.14.12"
+    "firebase": "^8.2.7",
+    "nuxt": "^2.14.12",
+    "vue-toastification": "^1.7.11"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
@@ -31,6 +37,7 @@
     "eslint": "^7.18.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.5.0",
+    "firebase-admin": "^9.5.0",
     "node-sass": "^5.0.0",
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-purgecss": "^1.0.0",
