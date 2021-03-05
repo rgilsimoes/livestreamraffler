@@ -7,7 +7,7 @@
         <h1
           class="text-3xl font-extrabold leading-tight text-gray-900 font-nunito"
         >
-          Hoje pode ser o teu dia de sorte!
+          {{ $t("global.sub-title") }}
         </h1>
       </div>
     </header>

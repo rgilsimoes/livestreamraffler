@@ -2,9 +2,17 @@
   <section class="w-full px-4 mx-auto sm:px-8">
     <div class="py-8">
       <div class="flex flex-row justify-between w-full mb-1 sm:mb-0">
-        <h2 class="text-2xl leading-tight">Sorteios</h2>
+        <h2 class="text-2xl font-extrabold leading-tight font-nunito">
+          Sorteios
+        </h2>
         <div class="text-end">
           <form class="flex w-full max-w-sm space-x-3">
+            <button
+              class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
+            >
+              <i class="fas fa-plus" />
+              <NuxtLink to="/members/raffles/create">Novo</NuxtLink>
+            </button>
             <div class="relative">
               <input
                 type="text"
@@ -14,7 +22,7 @@
               />
             </div>
             <button
-              class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
+              class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
               type="submit"
             >
               Aplicar
@@ -54,26 +62,36 @@
                 <th
                   scope="col"
                   class="px-5 py-3 text-sm font-bold text-center text-gray-800 bg-white border-b border-gray-200"
+                >
+                  Participantes
+                </th>
+                <th
+                  scope="col"
+                  class="px-5 py-3 text-sm font-bold text-center text-gray-800 bg-white border-b border-gray-200"
                 ></th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="rafle in rafles" :key="rafle.id">
+              <tr v-for="raffle in raffles" :key="raffle.id">
                 <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                   <p class="text-gray-900 whitespace-no-wrap">
-                    {{ rafle.code }}
+                    {{ raffle.code }}
                   </p>
                 </td>
                 <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                   <p class="text-gray-900 whitespace-no-wrap">
-                    {{ rafle.liveUrl }}
+                    {{ raffle.liveUrl }}
                   </p>
                 </td>
                 <td
                   class="px-5 py-5 text-sm text-center bg-white border-b border-gray-200"
                 >
                   <p class="text-gray-900 whitespace-no-wrap">
-                    {{ rafle.createdAt.toDate().toLocaleDateString("pt-PT") }}
+                    {{
+                      raffle.createdAt != undefined
+                        ? raffle.createdAt.toLocaleDateString("pt-PT")
+                        : ""
+                    }}
                   </p>
                 </td>
                 <td
@@ -87,24 +105,50 @@
                       class="absolute inset-0 bg-green-200 rounded-full opacity-50"
                     >
                     </span>
-                    <span class="relative"> {{ rafle.status }} </span>
+                    <span class="relative"> {{ raffle.status }} </span>
                   </span>
                 </td>
                 <td
                   class="px-5 py-5 text-sm text-center bg-white border-b border-gray-200"
                 >
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                    Editar
-                  </a>
-                  |
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                    Sortear
-                  </a>
+                  <span
+                    class="relative inline-block px-3 py-1 font-semibold leading-tight text-golden-900"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="absolute inset-0 rounded-full opacity-50 bg-golden-200"
+                    >
+                    </span>
+                    <span class="relative"> {{ raffle.status }} </span>
+                  </span>
+                </td>
+                <td
+                  class="px-5 py-5 text-sm text-center bg-white border-b border-gray-200"
+                >
+                  <button
+                    type="button"
+                    class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
+                  >
+                    <i class="fas fa-eye" />
+                    <NuxtLink :to="`/members/raffles/${raffle.id}`"
+                      >Ver</NuxtLink
+                    >
+                  </button>
+                </td>
+              </tr>
+              <tr v-if="!raffles">
+                <td
+                  class="px-5 py-5 text-sm bg-white border-b border-gray-200"
+                  colspan="5"
+                >
+                  <p class="text-lg text-gray-900 whitespace-no-wrap">
+                    Ainda não criaste nenhum sorteio!
+                  </p>
                 </td>
               </tr>
             </tbody>
           </table>
-          <Paginator />
+          <Paginator v-if="raffles" />
         </div>
       </div>
     </div>
@@ -117,115 +161,23 @@ import { mapState, mapGetters, mapActions } from "vuex";
 
 import toastaction from "~/components/ui/toastaction.vue";
 import Paginator from "~/components/ui/paginator.vue";
-import Rafle from "~/types/models/rafle.ts";
-
-interface DataObject {
-  channelId: number;
-  searchStr: string;
-  rafles: Rafle[];
-  newRafle: Rafle;
-}
-
-const pageSize = 20;
-let page = 1;
+import Raffle from "~/types/models/raffle.ts";
 
 export default Vue.extend({
-  data(): DataObject {
-    return {
-      channelId: 0,
-      searchStr: "",
-      rafles: [],
-      newRafle: {
-        code: "ABCDEFG",
-        liveUrl: "www.youtube.com",
-        status: 1, // Active
-      },
-    };
-  },
-  mounted() {
-    this.loadRafles(page);
-    console.log(this.rafles);
-  },
-  computed: {
-    //...mapActions({
-    //  addSorteio: "datastore/addSorteio",
-    //})
-  },
-  methods: {
-    async loadRafles(page: number) {
-      try {
-        await this.$fire.firestore
-          .collection("channels")
-          .doc("YQ6ul7G8O0yVAnIZeWCd")
-          .collection("rafles")
-          .orderBy("created_at", "desc")
-          .limit(pageSize)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              let data: Rafle = {
-                id: doc.id,
-                channelId: doc.data().channelId,
-                code: doc.data().code,
-                liveUrl: doc.data().liveUrl,
-                status: doc.data().status,
-                createdAt: doc.data().created_at,
-              };
-              this.rafles.push(data);
-            });
-          });
-      } catch (e) {
-        console.error(e);
-        this.$toast.error(
-          {
-            component: toastaction,
-            props: {
-              mensagem: "Ocorreu um erro!<br>" + e,
-            },
-          },
-          {
-            icon: "fas fa-exclamation-triangle",
-          }
-        );
-      }
-    },
+  name: "raffles-index",
+  data: () => ({
+    channelId: 0,
+    searchStr: "",
+  }),
 
-    /*
-    async criarSorteio() {
-      try {
-        // await this.addSorteio(
-        //   this.novoSorteio.email,
-        //   this.novoSorteio.password
-        // ).then(() => {
-        //   this.$toast.success(
-        //     {
-        //       component: toastaction,
-        //       props: {
-        //         mensagem: "Bem vindo!",
-        //       },
-        //     },
-        //     {
-        //       hideProgressBar: true,
-        //       icon: "fas fa-info-circle",
-        //     }
-        //   );
-        // });
-      } catch (e) {
-        this.$toast.error(
-          {
-            component: toastaction,
-            props: {
-              mensagem: "Ocorreu um erro!<br>" + e,
-            },
-          },
-          {
-            //hideProgressBar: false,
-            icon: "fas fa-exclamation-triangle",
-          }
-        );
-        //alert(e);
-      }
-    },*/
+  async fetch({ store }) {
+    await store.dispatch("datastore/getRaffles");
+  },
+
+  computed: {
+    ...mapState({
+      raffles: (state: any) => state.datastore.raffles,
+    }),
   },
 });
 </script>

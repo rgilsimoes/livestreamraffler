@@ -4,28 +4,31 @@
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img
-              class="w-8 h-8"
-              src="~/assets/rafle_logo.png"
-              alt="Live Stream Rafler"
-            />
+            <a href="/">
+              <img
+                class="w-8 h-8"
+                src="~/assets/raffle_logo.png"
+                alt="Live Stream Raffler"
+            /></a>
           </div>
           <div class="flex-shrink-0">
-            <span
-              class="p-5 text-2xl antialiased font-extrabold tracking-wide text-white overflow-ellipsis"
-              >LIVE STREAM RAFLER</span
+            <a href="/">
+              <span
+                class="p-5 text-2xl antialiased font-extrabold tracking-wide text-white overflow-ellipsis"
+                >{{ $t("global.app-title") }}</span
+              ></a
             >
           </div>
           <!-- Top Menu -->
           <div class="hidden md:block">
             <div class="flex items-baseline ml-10">
               <NuxtLink
-                to="/members/dashboard"
+                to="/"
                 class="px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md focus:outline-none focus:text-white focus:bg-gray-700"
-                >Dashboard</NuxtLink
+                >Início</NuxtLink
               >
               <NuxtLink
-                to="/members/rafles"
+                to="/members/raffles"
                 class="px-3 py-2 ml-4 text-sm font-medium text-gray-300 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                 >Sorteios</NuxtLink
               >
@@ -35,17 +38,75 @@
 
         <!-- Right Menu -->
         <button
-          v-if="!isLoggedIn"
+          v-if="!isLoggedIn()"
           class="inline-flex items-center px-4 py-2 font-medium text-white bg-pink-700 rounded hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
         >
-          <NuxtLink to="/login">Entrar</NuxtLink>
+          <NuxtLink :to="localePath('/login')">{{
+            $t("global.btn-login")
+          }}</NuxtLink>
           <i class="pl-4 fas fa-sign-in-alt" style="font-size: 24px" />
         </button>
-        <ProfileMenu v-else :openMenu="isOpen" />
+        <ProfileMenu v-else />
+        <div class="lang-dropdown">
+          <select v-model="$i18n.locale">
+            <option
+              v-for="lang in $i18n.locales"
+              :key="lang.code"
+              :value="lang.code"
+            >
+              {{ lang.name }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <div class="p-10">
+            <div class="relative inline-block dropdown">
+              <button
+                class="inline-flex items-center px-4 py-2 font-semibold text-gray-700 bg-gray-300 rounded"
+              >
+                <span class="mr-1">{{
+                  $i18n.locales.find((x) => x.code === $i18n.locale).name
+                }}</span>
+                <svg
+                  class="w-4 h-4 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                  />
+                </svg>
+              </button>
+              <ul class="absolute hidden pt-1 text-gray-700 dropdown-menu">
+                <li class="">
+                  <a
+                    class="items-baseline block px-4 py-2 whitespace-no-wrap bg-gray-200 rounded-t hover:bg-gray-400"
+                    href="#"
+                    ><country-flag country="pt" size="small" /> Português</a
+                  >
+                </li>
+                <li class="">
+                  <a
+                    class="block px-4 py-2 whitespace-no-wrap bg-gray-200 hover:bg-gray-400"
+                    href="#"
+                    ><country-flag country="us" size="small" /> Inglês</a
+                  >
+                </li>
+                <li class="">
+                  <a
+                    class="block px-4 py-2 whitespace-no-wrap bg-gray-200 rounded-b hover:bg-gray-400"
+                    href="#"
+                    ><country-flag country="es" size="small" /> Espanhol</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <MobileMenu :openMenu="isOpen" />
+    <MobileMenu />
   </nav>
 </template>
 
@@ -54,31 +115,34 @@ import Vue from "vue";
 import { mapState, mapGetters, mapMutations } from "vuex";
 import MobileMenu from "./mobilemenu.vue";
 import ProfileMenu from "./profilemenu.vue";
+import CountryFlag from "vue-country-flag";
 
 export default Vue.extend({
-  components: { ProfileMenu, MobileMenu },
-  data: () => ({
-    isLoggedIn: false,
-  }),
-  mounted() {
-    this.isLoggedIn = this.aisLoggedIn;
+  components: { ProfileMenu, MobileMenu, CountryFlag },
+  data() {
+    return {};
   },
   computed: {
-    /**
-     * Toogle Menu Flag
-     */
     ...mapState({
+      // The Menu State
       isOpen: (state: any) => state.isOpen,
-      authUser: (state: any) => state.firebaseAuth.authUser,
-    }),
-    ...mapGetters({
-      aisLoggedIn: "firebaseAuth/isLoggedIn",
     }),
   },
   methods: {
+    ...mapGetters({
+      // Is User LoggedIn?
+      isLoggedIn: "firebaseAuth/isLoggedIn",
+    }),
     ...mapMutations({
+      // Open/Close Menu
       toggle: "toogleMenu",
     }),
   },
 });
 </script>
+
+<style scoped>
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+</style>

@@ -194,8 +194,6 @@ export default Vue.extend({
                 created_at: this.$fireModule.firestore.Timestamp.now(),
               })
               .then((data) => {
-                console.log(data);
-                debugger;
                 this.$toast.success(
                   {
                     component: toastaction,
@@ -207,7 +205,7 @@ export default Vue.extend({
                     icon: "fas fa-exclamation-info",
                   }
                 );
-                this.$router.push("/members/rafles");
+                this.$router.push("/members/raffles");
               });
           })
           .catch(function (error) {

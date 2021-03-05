@@ -3,7 +3,7 @@ const path = require("path");
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "Live Stream Rafler!",
+    title: "Live Stream Raffler!",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -41,7 +41,8 @@ export default {
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
     "nuxt-purgecss",
-    "vue-toastification/nuxt"
+    "vue-toastification/nuxt",
+    "nuxt-i18n"
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -66,6 +67,7 @@ export default {
     }
   },
 
+  //Firebase module configurations
   firebase: {
     lazy: false,
     config: {
@@ -109,6 +111,7 @@ export default {
   },
   purgeCSS: { mode: "postcss" },
 
+  // Toast Module Configurations
   toast: {
     timeout: 3000,
     draggable: false,
@@ -116,5 +119,36 @@ export default {
     transition: "Vue-Toastification__fade",
     maxToasts: 10,
     newestOnTop: true
+  },
+
+  //Translations Module Configuration
+  i18n: {
+    locales: [
+      {
+        code: "pt",
+        iso: "pt-PT",
+        name: "Português",
+        file: "pt.json"
+      },
+      {
+        code: "en",
+        iso: "en-US",
+        name: "English",
+        file: "en.json"
+      }
+    ],
+    defaultLocale: "pt",
+    seo: true,
+    lazy: true,
+    detectBrowserLanguage: {
+      cookieKey: "redirected",
+      useCookie: true
+    },
+    langDir: "assets/locales/",
+    parsePages: false,
+    pages: {},
+    vueI18n: {
+      fallbackLocale: "en"
+    }
   }
 };

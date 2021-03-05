@@ -2,8 +2,10 @@
  * State
  */
 export const initialState = () => ({
+  //Logged User
   authUser: null,
-  userChannel: null
+  //Channel User
+  channelUser: null
 });
 
 /**
@@ -15,10 +17,17 @@ export const mutations = {
   },
 
   SET_AUTH_USER: (state, { authUser }) => {
+    console.info(
+      "SET_AUTH_USER - " + (process.server ? "Server Side" : "Client Side")
+    );
     state.authUser = {
       uid: authUser.uid,
       email: authUser.email
     };
+  },
+
+  SET_CHANNEL_USER: (state, { channelUser }) => {
+    state.channelUser = channelUser;
   }
 };
 
@@ -28,8 +37,18 @@ export const mutations = {
 export const getters = {
   isLoggedIn: state => {
     try {
+      console.info(
+        "isLoggedIn - " + (process.server ? "Server Side" : "Client Side")
+      );
+      console.info({ authUser: state.authUser });
       return state.authUser.id !== null;
-    } catch {
+    } catch (e) {
+      console.error(
+        "isLoggedIn - " +
+          e +
+          " - " +
+          (process.server ? "Server Side" : "Client Side")
+      );
       return false;
     }
   }
@@ -72,15 +91,23 @@ export const actions = {
    */
   async onAuthStateChanged({ commit }, { authUser }) {
     if (!authUser) {
+      console.info(
+        "AUTH_STATE_CHANGED - User is null - " +
+          (process.server ? "Server Side" : "Client Side")
+      );
       commit("RESET_STORE");
       return;
     }
     if (authUser && authUser.getIdToken) {
       try {
         const idToken = await authUser.getIdToken(true);
-        console.info("idToken", idToken);
+        console.info(
+          "AUTH_STATE_CHANGED - User exists - " +
+            (process.server ? "Server Side" : "Client Side")
+        );
+        console.info("AUTH_STATE_CHANGED - idToken", idToken);
       } catch (e) {
-        console.error(e);
+        console.error("AUTH_STATE_CHANGED - " + e);
       }
     }
     commit("SET_AUTH_USER", { authUser });
@@ -88,15 +115,22 @@ export const actions = {
 
   /**
    *
-   * @param {*} ctx
    */
-  checkVuexStore(ctx) {
-    if (this.$fire.auth === null) {
-      throw "Vuex Store example not working - this.$fire.auth cannot be accessed.";
-    }
+  async loadUserObject({ commit }, { authUser }) {
+    //Load User Object
+    const channelUser = await this.$fire.firestore
+      .collection("users")
+      .where("uid", "==", authUser.uid)
+      .get()
+      .then(querySnapshot => {
+        //It Supposed to be only one...
+        querySnapshot.forEach(docs => {
+          return {
+            channelUser: docs.data()
+          };
+        });
+      });
 
-    alert(
-      "Success. Nuxt-fire Objects can be accessed in store actions via this.$fire___"
-    );
+    commit("SET_CHANNEL_USER", { channelUser });
   }
 };

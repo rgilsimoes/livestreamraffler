@@ -28,7 +28,8 @@
       "@nuxtjs/axios",
       "@nuxtjs/firebase",
       "@types/node",
-      "vue-toastification/nuxt"
+      "vue-toastification/nuxt",
+      "nuxt-i18n",
     ]
   },
   "exclude": [

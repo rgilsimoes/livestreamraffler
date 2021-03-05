@@ -207,7 +207,7 @@ export default Vue.extend({
                     icon: "fas fa-exclamation-info",
                   }
                 );
-                this.$router.push("/members/rafles");
+                this.$router.push("/members/raffles");
               });
           })
           .catch(function (error) {

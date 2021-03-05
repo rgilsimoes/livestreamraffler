@@ -118,36 +118,28 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapMutations, mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default Vue.extend({
   name: "ProfileMenu",
-  props: {
-    openMenu: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-  },
+
   computed: {
-    /**
-     * Toogle Menu Flag
-     */
-    ...mapGetters({
-      isOpen: "isOpen",
+    ...mapState({
+      //Menu State
+      isOpen: (state: any) => state.isOpen,
     }),
   },
   methods: {
-    /**
-     * Toogle Menu Flag
-     */
-    ...mapMutations({
+    ...mapActions({
+      // Open/Close Menu
       toggle: "toogleMenu",
     }),
 
     async logout() {
       try {
         await this.$fire.auth.signOut();
+        this.toggle();
+        this.$store.dispatch("firebaseAuth/onAuthStateChanged", null);
         this.$router.push("/");
       } catch (e) {
         alert(e);

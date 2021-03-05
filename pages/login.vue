@@ -8,8 +8,8 @@
         <img
           class="w-auto mx-auto"
           style="height: 80px"
-          src="~/assets/rafle_logo.png"
-          alt="Live Stream Rafler"
+          src="~/assets/raffle_logo.png"
+          alt="Live Stream Raffler"
         />
         <h2
           class="mt-6 text-5xl font-black text-center text-gray-900 font-abel"
@@ -19,7 +19,7 @@
       </div>
       <form
         class="mt-8 space-y-6"
-        v-if="!isLoggedIn"
+        v-if="!isLoggedIn()"
         @submit.prevent="signInUser"
       >
         <input type="hidden" name="remember" value="true" />
@@ -49,7 +49,7 @@
               autocomplete="current-password"
               required
               placeholder="Password"
-              class="relative block w-full px-3 py-2 font-medium text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-lg"
+              class="relative block w-full px-3 py-2 my-1 font-medium text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-lg"
             />
             <i
               class="absolute inset-y-0 flex items-center text-gray-500 fas fa-key"
@@ -106,7 +106,7 @@
 
       <div v-else>
         <p>És o {{ authUser.email }}? Senão faz "logout"</p>
-        <Btn color="primary" outlined>Logout</Btn>
+        <Button color="primary" outlined>Logout</Button>
       </div>
     </div>
   </section>
@@ -118,31 +118,37 @@ import { mapState, mapGetters, mapActions } from "vuex";
 import toastaction from "~/components/ui/toastaction.vue";
 
 export default Vue.extend({
-  computed: {
-    ...mapState({
-      authUser: (state: any) => state.firebaseAuth.authUser,
-    }),
-    ...mapGetters({
-      isLoggedIn: "firebaseAuth/isLoggedIn",
-    }),
-  },
+  name: "login",
   data: () => ({
     formData: {
       email: "",
       password: "",
     },
   }),
+  computed: {
+    ...mapState({
+      authUser: (state: any) => state.firebaseAuth.authUser,
+    }),
+  },
   methods: {
-    // async createUser() {
-    //    try {
-    //      await this.$fire.auth.createUserWithEmailAndPassword(
-    //        this.formData.email,
-    //        this.formData.password
-    //      )
-    //    } catch (e) {
-    //      alert(e)
-    //    }
-    //  },
+    ...mapGetters({
+      isLoggedIn: "firebaseAuth/isLoggedIn",
+    }),
+
+    ...mapActions({
+      //onAuthStateChanged: "firebaseAuth/onAuthStateChanged",
+    }),
+
+    // async signInUser() {
+    //   await this.$store
+    //     .dispatch("firebaseAuth/signInUser", {
+    //       email: this.formData.email,
+    //       password: this.formData.password,
+    //     })
+    //     .then((res) => {
+    //       alert(res);
+    //     });
+    // },
     async signInUser() {
       try {
         await this.$fire.auth
@@ -151,8 +157,9 @@ export default Vue.extend({
             this.formData.password
           )
           .then((data) => {
-            console.log(data);
-            debugger;
+            this.$store.dispatch("firebaseAuth/loadUserObject", {
+              authUser: data.user,
+            });
             this.$toast.success(
               {
                 component: toastaction,
@@ -165,7 +172,7 @@ export default Vue.extend({
                 icon: "fas fa-info-circle",
               }
             );
-            this.$router.push("/members/rafles");
+            //this.$router.push("/members/raffles");
           });
       } catch (e) {
         this.$toast.error(
@@ -176,20 +183,12 @@ export default Vue.extend({
             },
           },
           {
-            //hideProgressBar: false,
             icon: "fas fa-exclamation-triangle",
           }
         );
         //alert(e);
       }
     },
-    // async logout() {
-    //   try {
-    //     await this.$fire.auth.signOut()
-    //   } catch (e) {
-    //     alert(e)
-    //   }
-    // },
   },
 });
 </script>

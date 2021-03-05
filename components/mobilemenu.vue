@@ -53,27 +53,20 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapMutations, mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default Vue.extend({
   name: "MobileMenu",
-  props: {
-    openMenu: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-  },
+
   computed: {
-    /**
-     * Toogle Menu Flag
-     */
-    ...mapGetters({
+    ...mapState({
+      //Menu State
       isOpen: "isOpen",
     }),
   },
   methods: {
-    ...mapMutations({
+    ...mapActions({
+      // Open/Close Menu
       toggle: "toogleMenu",
     }),
   },

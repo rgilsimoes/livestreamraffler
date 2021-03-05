@@ -3,17 +3,20 @@
  */
 
 export const state = () => ({
+  //Profile Menu State
   isOpen: false
 });
 
 export const mutations = {
-  toogleMenu(state) {
-    state.isOpen = !state.isOpen;
+  //Change Menu State
+  SET_OPEN_MENU(state, newState) {
+    state.isOpen = newState;
   }
 };
 
-export const getters = {
-  isOpen(state) {
-    return state.isOpen;
+export const actions = {
+  //Toogle Menu
+  toogleMenu(context) {
+    context.commit("SET_OPEN_MENU", !context.state.isOpen);
   }
 };
