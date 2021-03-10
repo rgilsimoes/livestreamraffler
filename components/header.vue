@@ -20,7 +20,7 @@
             >
           </div>
           <!-- Top Menu -->
-          <div class="hidden md:block">
+          <div v-if="isLoggedIn" class="hidden md:block">
             <div class="flex items-baseline ml-10">
               <NuxtLink
                 to="/"
@@ -35,31 +35,21 @@
             </div>
           </div>
         </div>
+        <div class="flex gap-5">
+          <!-- Right Menu -->
+          <button
+            v-if="!isLoggedIn"
+            class="inline-flex items-center px-4 py-2 font-medium text-white bg-pink-700 rounded hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
+          >
+            <NuxtLink :to="localePath('/login')">{{
+              $t("global.btn-login")
+            }}</NuxtLink>
+            <i class="pl-4 fas fa-sign-in-alt" style="font-size: 24px" />
+          </button>
 
-        <!-- Right Menu -->
-        <button
-          v-if="!isLoggedIn()"
-          class="inline-flex items-center px-4 py-2 font-medium text-white bg-pink-700 rounded hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
-        >
-          <NuxtLink :to="localePath('/login')">{{
-            $t("global.btn-login")
-          }}</NuxtLink>
-          <i class="pl-4 fas fa-sign-in-alt" style="font-size: 24px" />
-        </button>
-        <ProfileMenu v-else />
-        <div class="lang-dropdown">
-          <select v-model="$i18n.locale">
-            <option
-              v-for="lang in $i18n.locales"
-              :key="lang.code"
-              :value="lang.code"
-            >
-              {{ lang.name }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <div class="p-10">
+          <ProfileMenu v-else />
+
+          <div>
             <div class="relative inline-block dropdown">
               <button
                 class="inline-flex items-center px-4 py-2 font-semibold text-gray-700 bg-gray-300 rounded"
@@ -78,25 +68,12 @@
                 </svg>
               </button>
               <ul class="absolute hidden pt-1 text-gray-700 dropdown-menu">
-                <li class="">
-                  <a
+                <li v-for="lang in $i18n.locales" :key="lang.code">
+                  <nuxt-link
+                    :to="lang.code == 'pt' ? '/' : lang.code"
                     class="items-baseline block px-4 py-2 whitespace-no-wrap bg-gray-200 rounded-t hover:bg-gray-400"
-                    href="#"
-                    ><country-flag country="pt" size="small" /> Português</a
-                  >
-                </li>
-                <li class="">
-                  <a
-                    class="block px-4 py-2 whitespace-no-wrap bg-gray-200 hover:bg-gray-400"
-                    href="#"
-                    ><country-flag country="us" size="small" /> Inglês</a
-                  >
-                </li>
-                <li class="">
-                  <a
-                    class="block px-4 py-2 whitespace-no-wrap bg-gray-200 rounded-b hover:bg-gray-400"
-                    href="#"
-                    ><country-flag country="es" size="small" /> Espanhol</a
+                    ><country-flag :country="lang.flag" size="small" />
+                    {{ lang.name }}</nuxt-link
                   >
                 </li>
               </ul>
@@ -105,8 +82,6 @@
         </div>
       </div>
     </div>
-
-    <MobileMenu />
   </nav>
 </template>
 
@@ -127,12 +102,12 @@ export default Vue.extend({
       // The Menu State
       isOpen: (state: any) => state.isOpen,
     }),
-  },
-  methods: {
     ...mapGetters({
       // Is User LoggedIn?
-      isLoggedIn: "firebaseAuth/isLoggedIn",
+      isLoggedIn: "isLoggedIn",
     }),
+  },
+  methods: {
     ...mapMutations({
       // Open/Close Menu
       toggle: "toogleMenu",

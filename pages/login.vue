@@ -14,25 +14,25 @@
         <h2
           class="mt-6 text-5xl font-black text-center text-gray-900 font-abel"
         >
-          Começa a sortear
+          {{ $t("login.start-heading") }}
         </h2>
       </div>
       <form
         class="mt-8 space-y-6"
-        v-if="!isLoggedIn()"
+        v-if="!isLoggedIn"
         @submit.prevent="signInUser"
       >
         <input type="hidden" name="remember" value="true" />
         <div class="-space-y-px rounded-md shadow-sm">
           <div class="relative">
-            <label for="email" class="sr-only">Endereço de EMail</label>
+            <label for="email" class="sr-only">{{ $t("login.email") }}</label>
             <input
               v-model="formData.email"
               type="email"
               name="email"
               autocomplete="email"
               required
-              placeholder="Endereço de EMail"
+              :placeholder="$t('login.email-placeholer')"
               class="relative block w-full px-3 py-2 font-medium text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-lg"
             />
             <i
@@ -41,14 +41,16 @@
             />
           </div>
           <div class="relative">
-            <label for="password" class="sr-only">Password</label>
+            <label for="password" class="sr-only">{{
+              $t("login.password")
+            }}</label>
             <input
               v-model="formData.password"
               name="password"
               type="password"
               autocomplete="current-password"
               required
-              placeholder="Password"
+              :placeholder="$t('login.password')"
               class="relative block w-full px-3 py-2 my-1 font-medium text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-lg"
             />
             <i
@@ -76,7 +78,7 @@
               href="/recoverpassword"
               class="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Perdeste a password?
+              {{ $t("login.forgot_password") }}
             </a>
           </div>
         </div>
@@ -89,7 +91,7 @@
             <i
               class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-lock"
             />
-            Entrar
+            {{ $t("login.login") }}
           </button>
           <button
             class="relative flex justify-center w-full px-4 py-2 font-medium text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
@@ -98,7 +100,7 @@
               <i
                 class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-user-plus"
               />
-              Registar
+              {{ $t("login.register") }}
             </nuxt-link>
           </button>
         </div>
@@ -127,28 +129,14 @@ export default Vue.extend({
   }),
   computed: {
     ...mapState({
-      authUser: (state: any) => state.firebaseAuth.authUser,
+      authUser: (state: any) => state.authUser,
+    }),
+    ...mapGetters({
+      isLoggedIn: "isLoggedIn",
     }),
   },
+
   methods: {
-    ...mapGetters({
-      isLoggedIn: "firebaseAuth/isLoggedIn",
-    }),
-
-    ...mapActions({
-      //onAuthStateChanged: "firebaseAuth/onAuthStateChanged",
-    }),
-
-    // async signInUser() {
-    //   await this.$store
-    //     .dispatch("firebaseAuth/signInUser", {
-    //       email: this.formData.email,
-    //       password: this.formData.password,
-    //     })
-    //     .then((res) => {
-    //       alert(res);
-    //     });
-    // },
     async signInUser() {
       try {
         await this.$fire.auth
@@ -157,7 +145,7 @@ export default Vue.extend({
             this.formData.password
           )
           .then((data) => {
-            this.$store.dispatch("firebaseAuth/loadUserObject", {
+            this.$store.dispatch("loadUserObject", {
               authUser: data.user,
             });
             this.$toast.success(
@@ -172,8 +160,11 @@ export default Vue.extend({
                 icon: "fas fa-info-circle",
               }
             );
-            //this.$router.push("/members/raffles");
+            this.$router.push("/members/raffles");
           });
+        await this.$fire.auth.currentUser?.getIdToken().then((data) => {
+          console.log(data);
+        });
       } catch (e) {
         this.$toast.error(
           {
@@ -186,7 +177,6 @@ export default Vue.extend({
             icon: "fas fa-exclamation-triangle",
           }
         );
-        //alert(e);
       }
     },
   },

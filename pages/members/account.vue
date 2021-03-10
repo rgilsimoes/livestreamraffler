@@ -149,7 +149,7 @@
 import Vue from "vue";
 
 import toastaction from "~/components/ui/toastaction.vue";
-import User from "~/types/models/user.ts";
+import User from "~/types/models/user";
 
 interface DataObject {
   userData: User;
@@ -158,6 +158,8 @@ interface DataObject {
 }
 
 export default Vue.extend({
+  name: "account",
+  middleware: ["members"],
   data(): DataObject {
     return {
       userData: {

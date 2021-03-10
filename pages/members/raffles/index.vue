@@ -161,10 +161,10 @@ import { mapState, mapGetters, mapActions } from "vuex";
 
 import toastaction from "~/components/ui/toastaction.vue";
 import Paginator from "~/components/ui/paginator.vue";
-import Raffle from "~/types/models/raffle.ts";
 
 export default Vue.extend({
-  name: "raffles-index",
+  name: "raffles",
+  middleware: ["members"],
   data: () => ({
     channelId: 0,
     searchStr: "",

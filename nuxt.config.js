@@ -83,8 +83,9 @@ export default {
     onFirebaseHosting: false,
     services: {
       auth: {
+        persistence: true,
         initialize: {
-          onAuthStateChangedAction: "firebaseAuth/onAuthStateChanged"
+          onAuthStateChangedAction: "onAuthStateChanged"
         },
         ssr: true,
         emulatorPort: process.env.NODE_ENV === "development" ? 9099 : undefined,
@@ -128,13 +129,22 @@ export default {
         code: "pt",
         iso: "pt-PT",
         name: "Português",
-        file: "pt.json"
+        file: "pt.json",
+        flag: "pt"
       },
       {
         code: "en",
         iso: "en-US",
         name: "English",
-        file: "en.json"
+        file: "en.json",
+        flag: "us"
+      },
+      {
+        code: "es",
+        iso: "es-ES",
+        name: "Epanhol",
+        file: "es.json",
+        flag: "es"
       }
     ],
     defaultLocale: "pt",
@@ -148,7 +158,7 @@ export default {
     parsePages: false,
     pages: {},
     vueI18n: {
-      fallbackLocale: "en"
+      fallbackLocale: "pt"
     }
   }
 };

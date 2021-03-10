@@ -139,7 +139,9 @@ export default Vue.extend({
       try {
         await this.$fire.auth.signOut();
         this.toggle();
-        this.$store.dispatch("firebaseAuth/onAuthStateChanged", null);
+        this.$store.dispatch("onAuthStateChanged", {
+          authUser: null,
+        });
         this.$router.push("/");
       } catch (e) {
         alert(e);

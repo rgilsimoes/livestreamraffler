@@ -158,6 +158,7 @@ interface DataObject {
 }
 
 export default Vue.extend({
+  name: "register",
   data(): DataObject {
     return {
       userData: {

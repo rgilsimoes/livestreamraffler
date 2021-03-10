@@ -18,13 +18,16 @@
     "link-howto": "Vê como funciona"
   },
   "login": {
+    "start-heading": "Começa a sortear",
+    "email": "Endereço de E-Mail",
+    "email-placeholer": "Endereço de EMail",
     "password": "Password",
     "password_confirm": "Confirm Password",
     "login": "Log In",
     "forgot_password": "Forgot Password?",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "register": "Registar"
   },
-
   "new-raffle": "Novo sorteio",
   "remove": "Remove",
   "destroy_confirm_title": "Please Confirm",

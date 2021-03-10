@@ -18,14 +18,17 @@
     "link-howto": "See how it works"
   },
   "login": {
+    "start-heading": "Start raffling",
+    "email": "EMail Address",
+    "email-placeholer": "EMail Address",
     "password": "Password",
     "password_confirm": "Confirm Password",
     "login": "Log In",
     "forgot_password": "Forgot Password?",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "register": "Register"
   },
-
-  "new-raffle": "Novo sorteio",
+  "new-raffle": "New raffle",
   "remove": "Remove",
   "destroy_confirm_title": "Please Confirm",
   "destroy_confirm": "Are you sure you want to remove this?",
