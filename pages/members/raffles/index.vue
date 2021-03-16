@@ -169,11 +169,9 @@ export default Vue.extend({
     channelId: 0,
     searchStr: "",
   }),
-
-  async fetch({ store }) {
-    await store.dispatch("datastore/getRaffles");
+  created() {
+    this.$store.dispatch("datastore/getRaffles");
   },
-
   computed: {
     ...mapState({
       raffles: (state: any) => state.datastore.raffles,

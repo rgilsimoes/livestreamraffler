@@ -16,19 +16,22 @@ export const state = () => ({
 });
 
 export const mutations = {
-  //Change Menu State
+  //Change Profile Menu State
   SET_OPEN_MENU(state, newState) {
     state.isOpen = newState;
   },
 
+  // Clear User Related Data
   RESET_STORE: state => {
-    Object.assign(state, state);
+    state.authUser = null;
+    state.channelUser = null;
   },
 
+  // Set User Auth Data
   SET_AUTH_USER: (state, { authUser }) => {
-    console.info(
-      "SET_AUTH_USER - " + (process.server ? "Server Side" : "Client Side")
-    );
+    // console.info(
+    //   "SET_AUTH_USER - " + (process.server ? "Server Side" : "Client Side")
+    // );
     state.authUser = {
       uid: authUser.uid,
       email: authUser.email,
@@ -42,9 +45,9 @@ export const mutations = {
 };
 
 export const actions = {
+  /** Load Data On Server Init */
   async nuxtServerInit({ dispatch }, ctx) {
     // INFO -> Nuxt-fire Objects can be accessed in nuxtServerInit action via this.$fire___, ctx.$fire___ and ctx.app.$fire___'
-    console.log("NUXTINIT");
 
     /** Get the VERIFIED authUser on the server */
     if (ctx.res && ctx.res.locals && ctx.res.locals.user) {
@@ -65,7 +68,9 @@ export const actions = {
       console.info("No user found?..");
     }
   },
-  async onAuthStateChanged({ commit }, { authUser, claims }) {
+
+  /** If User State Changed  */
+  async onAuthStateChanged({ commit, dispatch }, { authUser, claims }) {
     if (!authUser) {
       console.info(
         "AUTH_STATE_CHANGED - User is null - " +
@@ -89,23 +94,35 @@ export const actions = {
       }
     }
     commit("SET_AUTH_USER", { authUser });
+    dispatch("loadUserObject", { authUser });
   },
+  /** Load User Info */
   async loadUserObject({ commit }, { authUser }) {
     //Load User Object
-    const channelUser = await this.$fire.firestore
+    await this.$fire.firestore
       .collection("users")
       .where("uid", "==", authUser.uid)
       .get()
       .then(querySnapshot => {
-        //It Supposed to be only one...
-        querySnapshot.forEach(docs => {
-          return {
-            channelUser: { docId: docs.id, ...docs.data() }
+        let channelUser;
+        if (querySnapshot.size == 1) {
+          channelUser = {
+            docId: querySnapshot.docs[0].id,
+            ...querySnapshot.docs[0].data()
           };
-        });
+        }
+        commit("SET_CHANNEL_USER", { channelUser });
       });
-
-    commit("SET_CHANNEL_USER", { channelUser });
+  },
+  /** Logout user */
+  async logout() {
+    try {
+      await this.$fire.auth.signOut().then(() => {
+        this.$router.push("/");
+      });
+    } catch (e) {
+      console.log(e);
+    }
   },
   //Toogle Menu
   toogleMenu(context) {

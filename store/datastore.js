@@ -14,12 +14,15 @@ export const actions = {
    * Get RAFFLES
    * @param {*} param0
    */
-  async getRaffles({ commit }) {
+  async getRaffles({ commit, rootState }) {
+    const userRef = this.$fire.firestore
+      .collection("users")
+      .doc(rootState.channelUser.docId);
+
     await this.$fire.firestore
-      //.collection("channels")
-      //.doc("YQ6ul7G8O0yVAnIZeWCd")
       .collection("raffles")
-      //.orderBy("created_at", "desc")
+      .where("user", "==", userRef)
+      .orderBy("created_at", "desc")
       .get()
       .then(querySnapshot => {
         let raffleCol = [];

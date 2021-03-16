@@ -133,20 +133,22 @@ export default Vue.extend({
     ...mapActions({
       // Open/Close Menu
       toggle: "toogleMenu",
+      logout: "logout",
     }),
 
-    async logout() {
-      try {
-        await this.$fire.auth.signOut();
-        this.toggle();
-        this.$store.dispatch("onAuthStateChanged", {
-          authUser: null,
-        });
-        this.$router.push("/");
-      } catch (e) {
-        alert(e);
-      }
-    },
+    // async logout() {
+    //   try {
+    //     await this.$fire.auth.signOut().then(() => {
+    //       this.toggle();
+    //       // this.$store.dispatch("onAuthStateChanged", {
+    //       //   authUser: null,
+    //       // });
+    //       this.$router.push("/");
+    //     });
+    //   } catch (e) {
+    //     alert(e);
+    //   }
+    // },
   },
 });
 </script>

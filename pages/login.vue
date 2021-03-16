@@ -107,8 +107,15 @@
       </form>
 
       <div v-else>
-        <p>És o {{ authUser.email }}? Senão faz "logout"</p>
-        <Button color="primary" outlined>Logout</Button>
+        <p class="py-3 my-3 text-2xl font-medium text-center font-abel">
+          Não és o {{ authUser.email }}?<br />
+          Então faz "logout"
+        </p>
+        <Button
+          @click="logout"
+          class="relative flex justify-center w-full px-4 py-2 font-medium text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
+          >Logout</Button
+        >
       </div>
     </div>
   </section>
@@ -137,6 +144,9 @@ export default Vue.extend({
   },
 
   methods: {
+    ...mapActions({
+      logout: "logout",
+    }),
     async signInUser() {
       try {
         await this.$fire.auth
@@ -145,9 +155,9 @@ export default Vue.extend({
             this.formData.password
           )
           .then((data) => {
-            this.$store.dispatch("loadUserObject", {
-              authUser: data.user,
-            });
+            // this.$store.dispatch("loadUserObject", {
+            //   authUser: data.user,
+            // });
             this.$toast.success(
               {
                 component: toastaction,

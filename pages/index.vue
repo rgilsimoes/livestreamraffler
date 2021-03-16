@@ -61,13 +61,14 @@
           >
         </div>
       </div>
+      <modal mensagem="teste" />
     </section>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-
+import modal from "~/components/ui/modal.vue";
 //import toastaction from "~/components/ui/toastaction.vue";
 
 export default Vue.extend({
