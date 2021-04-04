@@ -5,20 +5,19 @@
     </div>
     <div class="flex flex-col items-center w-full lg:flex-row lg:w-auto">
       <div class="mx-auto lg:mx-0 lg:ml-auto">
-        <a
+        <NuxtLink
+          :to="localePath('/help')"
           class="inline-block mt-0 text-blue-900 hover:text-indigo-600"
-          href="#"
-          >Ajuda / FAQ</a
-        >
-        <a
-          class="inline-block mt-0 ml-8 text-blue-900 hover:text-indigo-600"
-          href="#"
-          >Acerca</a
+          >Ajuda / FAQ</NuxtLink
         >
         <NuxtLink
-          to="/terms"
+          :to="localePath('/about')"
           class="inline-block mt-0 ml-8 text-blue-900 hover:text-indigo-600"
-          href="#"
+          >Acerca</NuxtLink
+        >
+        <NuxtLink
+          :to="localePath('/terms')"
+          class="inline-block mt-0 ml-8 text-blue-900 hover:text-indigo-600"
           >Privacidade e Termos de Uso</NuxtLink
         >
       </div>

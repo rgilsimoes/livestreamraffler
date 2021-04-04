@@ -16,7 +16,9 @@
     <main class="h-full">
       <div class="h-full py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="h-full px-4 sm:px-0">
-          <div class="h-full border-4 border-gray-200 border-dashed rounded-lg">
+          <div
+            class="h-full border-4 border-gray-200 border-dashed rounded-lg overflow-y-scroll"
+          >
             <Nuxt />
           </div>
         </div>

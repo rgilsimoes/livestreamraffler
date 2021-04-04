@@ -89,14 +89,14 @@ export default {
         initialize: {
           onAuthStateChangedAction: "onAuthStateChanged"
         },
-        ssr: true,
-        emulatorPort: process.env.NODE_ENV === "development" ? 9099 : undefined,
+        ssr: false,
+        //emulatorPort: process.env.NODE_ENV === "development" ? 9099 : undefined,
         disableEmulatorWarnings: true
       },
       firestore: {
         memoryOnly: false,
         //enablePersistence: true,
-        emulatorPort: process.env.NODE_ENV === "development" ? 8080 : undefined
+        //emulatorPort: process.env.NODE_ENV === "development" ? 8080 : undefined
       },
       performance: true,
       analytics: true

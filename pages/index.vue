@@ -51,7 +51,7 @@
         <div class="py-10">
           <NuxtLink
             class="inline-block px-8 py-4 mr-6 font-semibold leading-none text-white bg-indigo-600 rounded shadow hover:bg-indigo-700"
-            to="/register"
+            :to="localePath('/register')"
             >{{ $t("index.btn-register") }}</NuxtLink
           >
           <NuxtLink
@@ -61,28 +61,28 @@
           >
         </div>
       </div>
-      <modal mensagem="teste" />
+      <ui-modal v-if="showModal" @close="showModal = false" />
     </section>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import modal from "~/components/ui/modal.vue";
-//import toastaction from "~/components/ui/toastaction.vue";
 
 export default Vue.extend({
   name: "index",
   data: () => ({
     raffleCode: "",
+    showModal: false,
   }),
-  // methods: {
-  //   registerInRaffle() {
-  //     if (this.raffleCode !== "") {
-  //       alert("Codigo inválido");
-  //     }
-  //   },
-  // },
+  methods: {
+    registerInRaffle() {
+      alert("teste");
+      if (this.raffleCode !== "") {
+        this.showModal = true;
+      }
+    },
+  },
 });
 </script>
 

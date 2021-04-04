@@ -23,12 +23,12 @@
           <div v-if="isLoggedIn" class="hidden md:block">
             <div class="flex items-baseline ml-10">
               <NuxtLink
-                to="/"
+                :to="localePath('/')"
                 class="px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md focus:outline-none focus:text-white focus:bg-gray-700"
                 >Início</NuxtLink
               >
               <NuxtLink
-                to="/members/raffles"
+                :to="localePath('/members/raffles')"
                 class="px-3 py-2 ml-4 text-sm font-medium text-gray-300 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                 >Sorteios</NuxtLink
               >
@@ -70,7 +70,7 @@
               <ul class="absolute hidden pt-1 text-gray-700 dropdown-menu">
                 <li v-for="lang in $i18n.locales" :key="lang.code">
                   <nuxt-link
-                    :to="lang.code == 'pt' ? '/' : lang.code"
+                    :to="lang.code == 'pt' ? '/' : '/' + lang.code"
                     class="items-baseline block px-4 py-2 whitespace-no-wrap bg-gray-200 rounded-t hover:bg-gray-400"
                     ><country-flag :country="lang.flag" size="small" />
                     {{ lang.name }}</nuxt-link

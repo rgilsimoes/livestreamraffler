@@ -74,12 +74,12 @@
           </div>
 
           <div class="text-sm">
-            <a
-              href="/recoverpassword"
+            <NuxtLink
+              :to="localePath('/recoverpassword')"
               class="font-medium text-indigo-600 hover:text-indigo-500"
             >
               {{ $t("login.forgot_password") }}
-            </a>
+            </NuxtLink>
           </div>
         </div>
 
@@ -96,13 +96,17 @@
           <button
             class="relative flex justify-center w-full px-4 py-2 font-medium text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
           >
-            <nuxt-link to="/register">
+            <NuxtLink :to="localePath('/register')">
               <i
                 class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-user-plus"
               />
               {{ $t("login.register") }}
-            </nuxt-link>
+            </NuxtLink>
           </button>
+        </div>
+
+        <div>
+          <button type="button" @click="googleSignIn">Google</button>
         </div>
       </form>
 
@@ -111,11 +115,13 @@
           Não és o {{ authUser.email }}?<br />
           Então faz "logout"
         </p>
-        <Button
+        <button
+          type="button"
           @click="logout"
           class="relative flex justify-center w-full px-4 py-2 font-medium text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
-          >Logout</Button
         >
+          Logout
+        </button>
       </div>
     </div>
   </section>
@@ -123,6 +129,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import firebase from "firebase";
 import { mapState, mapGetters, mapActions } from "vuex";
 import toastaction from "~/components/ui/toastaction.vue";
 
@@ -146,6 +153,7 @@ export default Vue.extend({
   methods: {
     ...mapActions({
       logout: "logout",
+      login: "login",
     }),
     async signInUser() {
       try {
@@ -155,9 +163,6 @@ export default Vue.extend({
             this.formData.password
           )
           .then((data) => {
-            // this.$store.dispatch("loadUserObject", {
-            //   authUser: data.user,
-            // });
             this.$toast.success(
               {
                 component: toastaction,
@@ -170,11 +175,8 @@ export default Vue.extend({
                 icon: "fas fa-info-circle",
               }
             );
-            this.$router.push("/members/raffles");
+            this.$store.dispatch("login");
           });
-        await this.$fire.auth.currentUser?.getIdToken().then((data) => {
-          console.log(data);
-        });
       } catch (e) {
         this.$toast.error(
           {
@@ -188,6 +190,26 @@ export default Vue.extend({
           }
         );
       }
+    },
+    googleSignIn: async function () {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      await this.$fire.auth.signInWithPopup(provider).then((data) => {
+        this.$toast.success(
+          {
+            component: toastaction,
+            props: {
+              mensagem: "Bem vindo!",
+            },
+          },
+          {
+            hideProgressBar: true,
+            icon: "fas fa-info-circle",
+          }
+        );
+        this.$store.dispatch("login");
+      });
+
+      this.$store.dispatch("login");
     },
   },
 });

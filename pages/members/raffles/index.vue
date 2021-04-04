@@ -7,12 +7,12 @@
         </h2>
         <div class="text-end">
           <form class="flex w-full max-w-sm space-x-3">
-            <button
+            <NuxtLink
+              :to="localePath('/members/raffles/create')"
               class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
             >
-              <i class="fas fa-plus" />
-              <NuxtLink to="/members/raffles/create">Novo</NuxtLink>
-            </button>
+              <i class="fas fa-plus" />&nbsp;Novo</NuxtLink
+            >
             <div class="relative">
               <input
                 type="text"
@@ -25,7 +25,7 @@
               class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
               type="submit"
             >
-              Aplicar
+              <i class="fas fa-search" />&nbsp;Procurar
             </button>
           </form>
         </div>
@@ -125,15 +125,12 @@
                 <td
                   class="px-5 py-5 text-sm text-center bg-white border-b border-gray-200"
                 >
-                  <button
-                    type="button"
+                  <NuxtLink
                     class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
+                    :to="localePath(`/members/raffles/${raffle.id}`)"
                   >
-                    <i class="fas fa-eye" />
-                    <NuxtLink :to="`/members/raffles/${raffle.id}`"
-                      >Ver</NuxtLink
-                    >
-                  </button>
+                    <i class="fas fa-eye" />&nbsp;Ver</NuxtLink
+                  >
                 </td>
               </tr>
               <tr v-if="!raffles">
@@ -148,7 +145,7 @@
               </tr>
             </tbody>
           </table>
-          <Paginator v-if="raffles" />
+          <ui-paginator v-if="raffles" />
         </div>
       </div>
     </div>
@@ -160,7 +157,6 @@ import Vue from "vue";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 import toastaction from "~/components/ui/toastaction.vue";
-import Paginator from "~/components/ui/paginator.vue";
 
 export default Vue.extend({
   name: "raffles",
@@ -169,7 +165,7 @@ export default Vue.extend({
     channelId: 0,
     searchStr: "",
   }),
-  created() {
+  mounted() {
     this.$store.dispatch("datastore/getRaffles");
   },
   computed: {

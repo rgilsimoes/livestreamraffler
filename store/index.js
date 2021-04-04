@@ -114,6 +114,15 @@ export const actions = {
         commit("SET_CHANNEL_USER", { channelUser });
       });
   },
+  /** Login user */
+  async login() {
+    try {
+      this.$router.push("/members/raffles");
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
   /** Logout user */
   async logout() {
     try {

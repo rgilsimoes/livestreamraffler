@@ -42,7 +42,7 @@
             <div class="w-2/5">
               <button
                 type="button"
-                v-on:click="generateOTP()"
+                v-on:click="generateOTC()"
                 class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
               >
                 <i
@@ -122,34 +122,45 @@
 
 <script lang="ts">
 import Vue from "vue";
+import {mapState} from "vuex";
 import toastaction from "~/components/ui/toastaction.vue";
 import Raffle from "~/types/models/raffle.ts";
 
 export default Vue.extend({
   name: "create-raffle",
+  middleware: ["members"],
   data: () => {
     return {
+      userId: 0,
       channelId: 0,
-      searchStr: "",
       newRaffle: {
         code: "",
+        status: 1,
       } as Raffle,
     };
+  },
+  computed: {
+    ...mapState({
+      channelUser: (state: any) => state.channelUser,
+    }),
+  },
+  mounted: function () {
+    this.generateOTC();
   },
   methods: {
     /**
      * Generator ONE TIME CODE
      */
-    generateOTP() {
+    generateOTC() {
       var string = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      let OTP = "";
+      let OTC = "";
 
       var len = string.length;
       for (let i = 0; i < 8; i++) {
-        OTP += string[Math.floor(Math.random() * len)];
+        OTC += string[Math.floor(Math.random() * len)];
       }
 
-      this.newRaffle.code = OTP;
+      this.newRaffle.code = OTC;
       console.info("GENERATED RAFFLE CODE: " + this.newRaffle.code);
     },
 
@@ -158,6 +169,10 @@ export default Vue.extend({
      */
     async createRaffle() {
       try {
+        // Reference to owner
+        debugger;
+        let refUser = this.$fire.firestore.doc(`users/${this.channelUser.docId}`)
+
         await this.$fire.firestore
           .collection("raffles")
           .add({
@@ -165,6 +180,7 @@ export default Vue.extend({
             liveUrl: this.newRaffle.liveUrl,
             status: this.newRaffle.status,
             winners: this.newRaffle.winners,
+            user: refUser,
             created_at: this.$fireModule.firestore.Timestamp.now(),
           })
           .then((data) => {
@@ -179,9 +195,10 @@ export default Vue.extend({
                 icon: "fas fa-exclamation-info",
               }
             );
-            this.$router.push(`/members/raffles/$data.id`);
+            this.$router.push(`/members/raffles/${data.id}`);
           });
       } catch (e) {
+        console.log(e);
         this.$toast.error(
           {
             component: toastaction,

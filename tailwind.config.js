@@ -2,6 +2,7 @@ module.exports = {
   prefix: "",
   important: false,
   separator: ":",
+  jit: true,
   theme: {
     extend: {
       fontFamily: {

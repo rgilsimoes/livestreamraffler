@@ -135,20 +135,6 @@ export default Vue.extend({
       toggle: "toogleMenu",
       logout: "logout",
     }),
-
-    // async logout() {
-    //   try {
-    //     await this.$fire.auth.signOut().then(() => {
-    //       this.toggle();
-    //       // this.$store.dispatch("onAuthStateChanged", {
-    //       //   authUser: null,
-    //       // });
-    //       this.$router.push("/");
-    //     });
-    //   } catch (e) {
-    //     alert(e);
-    //   }
-    // },
   },
 });
 </script>
