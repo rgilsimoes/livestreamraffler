@@ -25,7 +25,7 @@ export default {
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  ssr: false,
+  ssr: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -82,21 +82,21 @@ export default {
       storageBucket: "youtube-rafles.appspot.com",
       messagingSenderId: "890703150532"
     },
-    onFirebaseHosting: false,
+    onFirebaseHosting: true,
     services: {
       auth: {
         persistence: true,
         initialize: {
           onAuthStateChangedAction: "onAuthStateChanged"
         },
-        ssr: false,
-        //emulatorPort: process.env.NODE_ENV === "development" ? 9099 : undefined,
+        ssr: true,
+        emulatorPort: process.env.NODE_ENV === "development" ? 9099 : undefined,
         disableEmulatorWarnings: true
       },
       firestore: {
         memoryOnly: false,
         //enablePersistence: true,
-        //emulatorPort: process.env.NODE_ENV === "development" ? 8080 : undefined
+        emulatorPort: process.env.NODE_ENV === "development" ? 8080 : undefined
       },
       performance: true,
       analytics: true

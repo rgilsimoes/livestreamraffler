@@ -24,13 +24,17 @@
                 <div
                   class="mt-1 text-sm font-medium leading-none text-gray-400"
                 >
-                  Ricardo Simões
+                  {{ authUser.displayName }}
                 </div>
               </div>
               <img
                 class="w-8 h-8 rounded-full"
-                src="~/assets/my_avatar.jpg"
-                alt
+                :src="
+                  authUser.photoURL !== ''
+                    ? authUser.photoURL
+                    : require('~/assets/my_avatar.jpg')
+                "
+                alt="Avatar"
               />
             </button>
           </div>
@@ -127,6 +131,7 @@ export default Vue.extend({
     ...mapState({
       //Menu State
       isOpen: (state: any) => state.isOpen,
+      authUser: (state: any) => state.authUser,
     }),
   },
   methods: {

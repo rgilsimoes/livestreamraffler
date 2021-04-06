@@ -86,7 +86,7 @@
         <div class="flex items-center mx-4">
           <button
             type="submit"
-            class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
+            class="relative flex justify-center w-full px-4 py-3 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
             <i
               class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-lock"
@@ -94,7 +94,7 @@
             {{ $t("login.login") }}
           </button>
           <button
-            class="relative flex justify-center w-full px-4 py-2 font-medium text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
+            class="relative flex justify-center w-full px-4 py-3 font-medium text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
           >
             <NuxtLink :to="localePath('/register')">
               <i
@@ -105,8 +105,14 @@
           </button>
         </div>
 
-        <div>
-          <button type="button" @click="googleSignIn">Google</button>
+        <div class="flex items-center">
+          <button
+            type="button"
+            @click="googleSignIn"
+            class="m-3 px-4 py-3 border-2 w-full text-gray-700 rounded-md hover:text-white hover:bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
+          >
+            <i class="fab fa-google pr-3"></i> Login with Google
+          </button>
         </div>
       </form>
 
@@ -193,23 +199,48 @@ export default Vue.extend({
     },
     googleSignIn: async function () {
       var provider = new firebase.auth.GoogleAuthProvider();
-      await this.$fire.auth.signInWithPopup(provider).then((data) => {
-        this.$toast.success(
-          {
-            component: toastaction,
-            props: {
-              mensagem: "Bem vindo!",
+      await this.$fire.auth.signInWithPopup(provider).then((registeredUser) => {
+        // For new users register Custom User Data
+        if (registeredUser.additionalUserInfo?.isNewUser) {
+          this.$fire.firestore
+            .collection("users")
+            .add({
+              uid: registeredUser.user?.uid,
+              email: registeredUser.user?.email,
+              name: registeredUser.user?.displayName,
+              channelUrl: "",
+              status: 2,
+              created_at: this.$fireModule.firestore.Timestamp.now(),
+            })
+            .then((data) => {
+              console.log(data);
+              this.$toast.success(
+                {
+                  component: toastaction,
+                  props: {
+                    mensagem: "Bem vindo !",
+                  },
+                },
+                {
+                  icon: "fas fa-exclamation-info",
+                }
+              );
+            });
+        } else {
+          this.$toast.success(
+            {
+              component: toastaction,
+              props: {
+                mensagem: "Bem vindo de volta!!",
+              },
             },
-          },
-          {
-            hideProgressBar: true,
-            icon: "fas fa-info-circle",
-          }
-        );
-        this.$store.dispatch("login");
+            {
+              hideProgressBar: true,
+              icon: "fas fa-info-circle",
+            }
+          );
+        }
       });
-
-      this.$store.dispatch("login");
     },
   },
 });

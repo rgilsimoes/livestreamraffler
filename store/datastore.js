@@ -15,13 +15,13 @@ export const actions = {
    * @param {*} param0
    */
   async getRaffles({ commit, rootState }) {
-    const userRef = this.$fire.firestore
-      .collection("users")
-      .doc(rootState.channelUser.docId);
+    // const userRef = this.$fire.firestore
+    //   .collection("users")
+    //   .doc(rootState.channelUser.docId);
 
     await this.$fire.firestore
       .collection("raffles")
-      .where("user", "==", userRef)
+      //.where("user", "==", userRef)
       .orderBy("created_at", "desc")
       .get()
       .then(querySnapshot => {

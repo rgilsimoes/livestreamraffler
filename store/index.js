@@ -29,13 +29,14 @@ export const mutations = {
 
   // Set User Auth Data
   SET_AUTH_USER: (state, { authUser }) => {
-    // console.info(
-    //   "SET_AUTH_USER - " + (process.server ? "Server Side" : "Client Side")
-    // );
+    console.info(
+      "SET_AUTH_USER - " + (process.server ? "Server Side" : "Client Side") + " - " + authUser
+    );
     state.authUser = {
       uid: authUser.uid,
       email: authUser.email,
-      displayName: authUser.displayName
+      displayName: authUser.displayName,
+      photoURL: authUser.photoURL
     };
   },
 
@@ -71,6 +72,7 @@ export const actions = {
 
   /** If User State Changed  */
   async onAuthStateChanged({ commit, dispatch }, { authUser, claims }) {
+
     if (!authUser) {
       console.info(
         "AUTH_STATE_CHANGED - User is null - " +
@@ -93,11 +95,13 @@ export const actions = {
         console.error("AUTH_STATE_CHANGED - " + e);
       }
     }
+
     commit("SET_AUTH_USER", { authUser });
     dispatch("loadUserObject", { authUser });
   },
   /** Load User Info */
   async loadUserObject({ commit }, { authUser }) {
+    console.log("Loading User Info", authUser);
     //Load User Object
     await this.$fire.firestore
       .collection("users")

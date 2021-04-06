@@ -1,11 +1,13 @@
 {
   "global": {
     "app-title": "Live Stream Raffler",
-    "sub-title": "Today could be you lucky day!",
+    "sub-title": "Today could be your lucky day!",
     "btn-login": "Login",
     "link-help-faq": "Ajuda / FAQ",
     "link-about": "Acerca",
-    "link-terms": "Privacidade e Termos de Uso"
+    "link-terms": "Privacidade e Termos de Uso",
+    "link-home": "Início",
+    "link-raffles": "Sorteios"
   },
   "index": {
     "participate-heading": "Do you want to participate in a raffle?",

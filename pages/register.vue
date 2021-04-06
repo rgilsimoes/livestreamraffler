@@ -149,7 +149,7 @@
 import Vue from "vue";
 
 import toastaction from "~/components/ui/toastaction.vue";
-import User from "~/types/models/user.ts";
+import User from "~/types/models/user";
 
 interface DataObject {
   userData: User;
@@ -183,7 +183,6 @@ export default Vue.extend({
             this.userPassWord
           )
           .then((registeredUser) => {
-            //this.fillUserData(registeredUser);
             this.$fire.firestore
               .collection("users")
               .add({

@@ -20,17 +20,17 @@
             >
           </div>
           <!-- Top Menu -->
-          <div v-if="isLoggedIn" class="hidden md:block">
+          <div v-if="isLoggedIn" class="hidden md:block topMenu">
             <div class="flex items-baseline ml-10">
               <NuxtLink
                 :to="localePath('/')"
-                class="px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md focus:outline-none focus:text-white focus:bg-gray-700"
-                >Início</NuxtLink
+                class="px-3 py-2 text-sm font-medium"
+                >{{ $t("global.link-home") }}</NuxtLink
               >
               <NuxtLink
                 :to="localePath('/members/raffles')"
-                class="px-3 py-2 ml-4 text-sm font-medium text-gray-300 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                >Sorteios</NuxtLink
+                class="px-3 py-2 ml-4 text-sm font-medium"
+                >{{ $t("global.link-raffles") }}</NuxtLink
               >
             </div>
           </div>
@@ -52,7 +52,7 @@
           <div>
             <div class="relative inline-block dropdown">
               <button
-                class="inline-flex items-center px-4 py-2 font-semibold text-gray-700 bg-gray-300 rounded"
+                class="inline-flex items-center px-4 py-2 font-semibold text-gray-700 bg-gray-300 rounded w-32 justify-between"
               >
                 <span class="mr-1">{{
                   $i18n.locales.find((x) => x.code === $i18n.locale).name
@@ -116,8 +116,20 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+
+.topMenu a {
+  @apply text-gray-300 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700;
+}
+
+/* .topMenu a.nuxt-link-active {
+  @apply text-white bg-gray-900 rounded-md;
+} */
+
+.topMenu a.nuxt-link-exact-active {
+  @apply text-white bg-gray-900 rounded-md;
 }
 </style>
