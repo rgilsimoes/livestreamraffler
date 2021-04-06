@@ -73,16 +73,17 @@ export default {
   firebase: {
     lazy: false,
     config: {
-      apiKey: "AIzaSyCyK_ta-EMdTydst9bNw3H13TUNmM0xTAk",
-      authDomain: "rafle.firebaseapp.com",
-      databaseURL: "https://youtube-rafle.firebaseio.com",
-      projectId: "youtube-rafle",
-      appId: "1:890703150532:web:9b48157da5561e79547891",
-      measurementId: "",
-      storageBucket: "youtube-rafles.appspot.com",
-      messagingSenderId: "890703150532"
+      apiKey: process.env.FIREBASE_API_KEY,
+      authDomain: process.env.FIREBASE_AUTH_DOMAIN || "demo.firebaseapp.com",
+      databaseURL:
+        process.env.FIREBASE_DATABASE_URL || "https://demo.firebaseio.com",
+      projectId: process.env.FIREBASE_PROJECT_ID || "demo",
+      appId: process.env.FIREBASE_APP_ID,
+      measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "demo.appspot.com",
+      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
     },
-    onFirebaseHosting: true,
+    onFirebaseHosting: false,
     services: {
       auth: {
         persistence: true,
