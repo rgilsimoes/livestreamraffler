@@ -30,7 +30,10 @@ export const mutations = {
   // Set User Auth Data
   SET_AUTH_USER: (state, { authUser }) => {
     console.info(
-      "SET_AUTH_USER - " + (process.server ? "Server Side" : "Client Side") + " - " + authUser
+      "SET_AUTH_USER - " +
+        (process.server ? "Server Side" : "Client Side") +
+        " - " +
+        authUser
     );
     state.authUser = {
       uid: authUser.uid,
@@ -40,6 +43,7 @@ export const mutations = {
     };
   },
 
+  // Set User Specific Data
   SET_CHANNEL_USER: (state, { channelUser }) => {
     state.channelUser = channelUser;
   }
@@ -47,32 +51,38 @@ export const mutations = {
 
 export const actions = {
   /** Load Data On Server Init */
-  async nuxtServerInit({ dispatch }, ctx) {
+  async nuxtServerInit({ dispatch, commit }, res) {
     // INFO -> Nuxt-fire Objects can be accessed in nuxtServerInit action via this.$fire___, ctx.$fire___ and ctx.app.$fire___'
 
     /** Get the VERIFIED authUser on the server */
-    if (ctx.res && ctx.res.locals && ctx.res.locals.user) {
-      const { allClaims: claims, ...authUser } = ctx.res.locals.user;
+    if (res && res.locals && res.locals.user) {
+      const {
+        allClaims: claims,
+        idToken: token,
+        ...authUser
+      } = res.locals.user;
 
       console.info(
-        "Auth User verified on server-side. User: ",
+        "nuxtServerInit - User: ",
         authUser,
         "Claims:",
-        claims
+        claims,
+        "Token:",
+        token
       );
 
       await dispatch("onAuthStateChanged", {
         authUser,
-        claims
+        claims,
+        token
       });
     } else {
-      console.info("No user found?..");
+      console.warn("nuxtServerInit - No user found.");
     }
   },
 
   /** If User State Changed  */
   async onAuthStateChanged({ commit, dispatch }, { authUser, claims }) {
-
     if (!authUser) {
       console.info(
         "AUTH_STATE_CHANGED - User is null - " +
@@ -101,7 +111,6 @@ export const actions = {
   },
   /** Load User Info */
   async loadUserObject({ commit }, { authUser }) {
-    console.log("Loading User Info", authUser);
     //Load User Object
     await this.$fire.firestore
       .collection("users")
@@ -121,9 +130,9 @@ export const actions = {
   /** Login user */
   async login() {
     try {
-      this.$router.push("/members/raffles");
+      this.$router.push(this.app.localeRoute({ name: "members-raffles" }));
     } catch (e) {
-      console.log(e);
+      console.error("ERROR:" + e);
     }
   },
 
@@ -131,10 +140,10 @@ export const actions = {
   async logout() {
     try {
       await this.$fire.auth.signOut().then(() => {
-        this.$router.push("/");
+        this.$router.push(this.app.localeRoute({ name: "index" }));
       });
     } catch (e) {
-      console.log(e);
+      console.error("ERROR:" + e);
     }
   },
   //Toogle Menu

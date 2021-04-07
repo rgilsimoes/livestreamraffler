@@ -83,7 +83,7 @@ export default {
       storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "demo.appspot.com",
       messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
     },
-    onFirebaseHosting: false,
+    onFirebaseHosting: process.env.NODE_ENV === "development" ? false : true,
     services: {
       auth: {
         persistence: true,
@@ -154,8 +154,12 @@ export default {
     seo: true,
     lazy: true,
     detectBrowserLanguage: {
-      cookieKey: "redirected",
-      useCookie: true
+      alwaysRedirect: true,
+      fallbackLocale: "pt",
+      onlyOnRoot: true,
+      useCookie: true,
+      cookieKey: "i18n_redirected",
+      cookieSecure: true
     },
     langDir: "assets/locales/",
     parsePages: false,

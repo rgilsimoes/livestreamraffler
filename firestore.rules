@@ -1,9 +1,30 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+  	//Participants
+    match /raffles/{raffleId}/participants/{participantId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if (request.auth != null && request.auth.uid == resource.data.uid);
+    }
+  	//Raffles
+    match /raffles/{raffleId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if (request.auth != null && request.auth.uid == resource.data.uid);
+    }
+
+    //Users
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if (request.auth != null && request.auth.uid == resource.data.uid);
+    }
+
     match /{document=**} {
-      //TODO Alterar regra para autenticação
-      allow read, write: if true;
+      //Default Read Allow, Write Deny
+      allow read: if false;
+      allow write: if false;
     }
   }
 }

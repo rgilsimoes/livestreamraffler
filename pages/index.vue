@@ -20,8 +20,9 @@
                     v-model="raffleCode"
                     type="text"
                     required
+                    maxlength="8"
                     :placeholder="$t('index.enter-code')"
-                    class="flex-auto p-3 mr-2 text-gray-900 placeholder-gray-600 rounded shadow appearance-none focus:outline-none"
+                    class="flex-auto p-3 mr-2 text-gray-900 placeholder-gray-600 rounded shadow appearance-none focus:outline-none uppercase"
                   />
                   <button
                     type="submit"
@@ -61,24 +62,50 @@
           >
         </div>
       </div>
-      <ui-modal v-if="showModal" @close="showModal = false" />
+      <ui-modal v-if="showModal" @close="showModal = false">
+        <h3>{{ raffle.code }}</h3>
+        <input
+          v-model="participantEmail"
+          type="email"
+          name="email"
+          autocomplete="email"
+          required
+          :placeholder="$t('login.email-placeholer')"
+          class="relative block w-full px-3 py-2 font-medium text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-lg"
+        />
+      </ui-modal>
     </section>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import Raffle from "~/types/models/raffle";
 
 export default Vue.extend({
   name: "index",
   data: () => ({
     raffleCode: "",
+    raffle: {} as Raffle,
+    participantEmail: "",
     showModal: false,
   }),
   methods: {
-    registerInRaffle() {
-      alert("teste");
+    async registerInRaffle() {
       if (this.raffleCode !== "") {
+        //Find Raffle
+        await this.$fire.firestore
+          .collection("raffles")
+          .where("code", "==", "U140FS60")
+          .get()
+          .then((querySnapshot) => {
+            if (querySnapshot.size == 1) {
+              this.raffle = {
+                id: querySnapshot.docs[0].id,
+                ...querySnapshot.docs[0].data(),
+              };
+            }
+          });
         this.showModal = true;
       }
     },

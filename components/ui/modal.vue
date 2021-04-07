@@ -18,7 +18,7 @@
               </div>
               <div class="w-full h-full p-5 overflow-y-auto modal-body">
                 <p class="text-justify">
-                  <span v-html="mensagem"></span>
+                  <slot><span v-html="mensagem"></span></slot>
                 </p>
               </div>
               <div class="px-5 py-3 text-right modal-footer border0-t">

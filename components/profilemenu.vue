@@ -30,9 +30,9 @@
               <img
                 class="w-8 h-8 rounded-full"
                 :src="
-                  authUser.photoURL !== ''
+                  authUser.photoURL !== null
                     ? authUser.photoURL
-                    : require('~/assets/my_avatar.jpg')
+                    : require('@/assets/my_avatar.jpg')
                 "
                 alt="Avatar"
               />

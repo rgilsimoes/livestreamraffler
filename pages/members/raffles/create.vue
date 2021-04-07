@@ -13,7 +13,7 @@
         <div class="max-w-sm mx-auto md:w-full md:mx-0">
           <div class="inline-flex items-center space-x-4">
             <h1 class="text-2xl font-semibold text-gray-600 font-abel">
-              {{ $t("new-raffle") }}
+              {{ $t("raffles.new") }}
             </h1>
           </div>
         </div>
@@ -22,7 +22,9 @@
         <div
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">Código:</h2>
+          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+            {{ $t("raffles.code") }}
+          </h2>
           <div class="flex max-w-sm gap-3 mx-auto md:w-3/5">
             <div class="relative w-3/4">
               <input
@@ -32,7 +34,7 @@
                 readonly
                 id="newRaffle-code"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Código"
+                placeholder="$t('raffles.code')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-qrcode"
@@ -48,7 +50,7 @@
                 <i
                   class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-retweet"
                 />
-                Gerar
+                {{ $t("raffles.generate") }}
               </button>
             </div>
           </div>
@@ -58,7 +60,7 @@
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
           <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
-            URL da Live:
+            {{ $t("raffles.liveUrl") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
@@ -68,7 +70,7 @@
                 required
                 id="newRaffle-name"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="URL da Live"
+                placeholder="$t('raffles.liveUrl')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-anchor"
@@ -122,9 +124,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 import toastaction from "~/components/ui/toastaction.vue";
-import Raffle from "~/types/models/raffle.ts";
+import Raffle from "~/types/models/raffle";
 
 export default Vue.extend({
   name: "create-raffle",
@@ -171,7 +173,9 @@ export default Vue.extend({
       try {
         // Reference to owner
         debugger;
-        let refUser = this.$fire.firestore.doc(`users/${this.channelUser.docId}`)
+        let refUser = this.$fire.firestore.doc(
+          `users/${this.channelUser.docId}`
+        );
 
         await this.$fire.firestore
           .collection("raffles")

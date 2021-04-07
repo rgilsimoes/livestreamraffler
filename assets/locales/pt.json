@@ -3,9 +3,11 @@
     "app-title": "Live Stream Raffler",
     "sub-title": "Hoje pode ser o teu dia de sorte!",
     "btn-login": "Entrar",
-    "link-help-faq": "Ajuda / FAQ",
+    "link-help-faq": "Perguntas Frequentes",
     "link-about": "Acerca",
-    "link-terms": "Privacidade e Termos de Uso"
+    "link-terms": "Privacidade e Termos de Uso",
+    "link-home": "Início",
+    "link-raffles": "Sorteios"
   },
   "index": {
     "participate-heading": "Queres participar num sorteio?",
@@ -22,19 +24,21 @@
     "email": "Endereço de E-Mail",
     "email-placeholer": "Endereço de EMail",
     "password": "Password",
-    "password_confirm": "Confirm Password",
+    "password_confirm": "Confirmar a Password",
     "login": "Log In",
-    "forgot_password": "Forgot Password?",
-    "logout": "Log Out",
+    "forgot_password": "Recuperar Password?",
+    "logout": "Terminar Sessão",
     "register": "Registar"
   },
-  "new-raffle": "Novo sorteio",
-  "remove": "Remove",
-  "destroy_confirm_title": "Please Confirm",
-  "destroy_confirm": "Are you sure you want to remove this?",
-  "back": "Back",
-  "save": "Save",
-  "update": "Update",
+  "raffles": {
+    "new": "Novo Sorteio",
+    "code": "Código",
+    "generate": "Gerar",
+    "liveUrl": "URL da Live:",
+    "view-raffle": "Sorteio",
+    "btn-confirm": "Confirmar",
+    "participants": "Participantes"
+  },
   "errors": {
     "login": {
       "required": "Please fill this out.",

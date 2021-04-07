@@ -4,16 +4,16 @@
     "sub-title": "Today could be your lucky day!",
     "btn-login": "Login",
     "link-help-faq": "Ajuda / FAQ",
-    "link-about": "Acerca",
-    "link-terms": "Privacidade e Termos de Uso",
-    "link-home": "Início",
-    "link-raffles": "Sorteios"
+    "link-about": "About",
+    "link-terms": "Privacy and Terms of use",
+    "link-home": "Home",
+    "link-raffles": "Raffles"
   },
   "index": {
     "participate-heading": "Do you want to participate in a raffle?",
     "participate-subheading": "Enter the raffle code!",
     "enter-code": "Enter raffle code!",
-    "create-heading": "Queres fazer um sorteio com quem está a assitir às tuas \"Lives\"?",
+    "create-heading": "Would you like to make a raffle with your Live viewers?",
     "create-subheading": "Peace of cake! Lose the manual spreadsheets!",
     "btn-participate": "Participate",
     "btn-register": "Register",
@@ -30,13 +30,15 @@
     "logout": "Log Out",
     "register": "Register"
   },
-  "new-raffle": "New raffle",
-  "remove": "Remove",
-  "destroy_confirm_title": "Please Confirm",
-  "destroy_confirm": "Are you sure you want to remove this?",
-  "back": "Back",
-  "save": "Save",
-  "update": "Update",
+  "raffles": {
+    "new": "New raffle",
+    "code": "Code",
+    "generate": "Generate",
+    "liveUrl": "Live URL:",
+    "view-raffle": "Raffle",
+    "btn-confirm": "Confirm",
+    "participants": "Participants"
+  },
   "errors": {
     "login": {
       "required": "Please fill this out.",

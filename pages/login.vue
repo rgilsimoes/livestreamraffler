@@ -135,7 +135,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-import firebase from "firebase";
 import { mapState, mapGetters, mapActions } from "vuex";
 import toastaction from "~/components/ui/toastaction.vue";
 
@@ -181,8 +180,9 @@ export default Vue.extend({
                 icon: "fas fa-info-circle",
               }
             );
-            this.$store.dispatch("login");
           });
+
+        this.$store.dispatch("login");
       } catch (e) {
         this.$toast.error(
           {
@@ -198,7 +198,7 @@ export default Vue.extend({
       }
     },
     googleSignIn: async function () {
-      var provider = new firebase.auth.GoogleAuthProvider();
+      var provider = new this.$fireModule.auth.GoogleAuthProvider();
       await this.$fire.auth.signInWithPopup(provider).then((registeredUser) => {
         // For new users register Custom User Data
         if (registeredUser.additionalUserInfo?.isNewUser) {
