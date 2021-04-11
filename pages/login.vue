@@ -62,7 +62,7 @@
 
         <div class="flex items-center justify-between">
           <div class="flex items-center">
-            <input
+            <!-- <input
               id="remember_me"
               name="remember_me"
               type="checkbox"
@@ -70,7 +70,7 @@
             />
             <label for="remember_me" class="block ml-2 text-sm text-gray-900">
               Lembrar-me
-            </label>
+            </label> -->
           </div>
 
           <div class="text-sm">
@@ -111,22 +111,23 @@
             @click="googleSignIn"
             class="m-3 px-4 py-3 border-2 w-full text-gray-700 rounded-md hover:text-white hover:bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
           >
-            <i class="fab fa-google pr-3"></i> Login with Google
+            <i class="fab fa-google pr-3"></i>
+            {{ $t("login.btn-login-google") }}
           </button>
         </div>
       </form>
 
       <div v-else>
-        <p class="py-3 my-3 text-2xl font-medium text-center font-abel">
-          Não és o {{ authUser.email }}?<br />
-          Então faz "logout"
-        </p>
+        <p
+          class="py-3 my-3 text-2xl font-medium text-center font-abel"
+          v-html="$t('login.msgs.logged-in', { email: authUser.email })"
+        ></p>
         <button
           type="button"
           @click="logout"
           class="relative flex justify-center w-full px-4 py-2 font-medium text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
         >
-          Logout
+          {{ $t("login.logout") }}
         </button>
       </div>
     </div>
@@ -197,8 +198,12 @@ export default Vue.extend({
         );
       }
     },
+    /** Sign In with Google Authentication Provider */
     googleSignIn: async function () {
+      // Get the Google provider
       var provider = new this.$fireModule.auth.GoogleAuthProvider();
+
+      // Use Google provider on signWithPopup
       await this.$fire.auth.signInWithPopup(provider).then((registeredUser) => {
         // For new users register Custom User Data
         if (registeredUser.additionalUserInfo?.isNewUser) {
@@ -209,7 +214,7 @@ export default Vue.extend({
               email: registeredUser.user?.email,
               name: registeredUser.user?.displayName,
               channelUrl: "",
-              status: 2,
+              status: 1, // Active
               created_at: this.$fireModule.firestore.Timestamp.now(),
             })
             .then((data) => {
@@ -218,7 +223,7 @@ export default Vue.extend({
                 {
                   component: toastaction,
                   props: {
-                    mensagem: "Bem vindo !",
+                    mensagem: "Bem vindo!",
                   },
                 },
                 {
@@ -227,11 +232,12 @@ export default Vue.extend({
               );
             });
         } else {
+          // Existing User
           this.$toast.success(
             {
               component: toastaction,
               props: {
-                mensagem: "Bem vindo de volta!!",
+                mensagem: "Bem vindo de volta!",
               },
             },
             {

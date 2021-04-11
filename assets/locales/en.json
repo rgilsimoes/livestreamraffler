@@ -7,7 +7,20 @@
     "link-about": "About",
     "link-terms": "Privacy and Terms of use",
     "link-home": "Home",
-    "link-raffles": "Raffles"
+    "link-raffles": "Raffles",
+    "loading-text": "Please wait...",
+    "btn-close": "Close",
+    "participate": "Enter Raffle",
+    "msgs": {
+      "welcome": "Welcome {name}!",
+      "general-error": "There was an error:"
+    },
+    "avatar": "Avatar",
+    "menu": {
+      "logout": "Logout",
+      "profile": "Profile",
+      "settings": "Settings"
+    }
   },
   "index": {
     "participate-heading": "Do you want to participate in a raffle?",
@@ -17,36 +30,60 @@
     "create-subheading": "Peace of cake! Lose the manual spreadsheets!",
     "btn-participate": "Participate",
     "btn-register": "Register",
-    "link-howto": "See how it works"
+    "link-howto": "See how it works",
+    "verify-raffle": "Checking raffle code.",
+    "msgs": {
+      "raffle-not-found": "This raffle does not exist or as finished!",
+      "email-already-registered": "This E-Mail is already registered!<br/>Keep an eye on the stream!",
+      "email-registered": "Your EMail was registered!<br/>Thank's for participating!"
+    }
   },
   "login": {
     "start-heading": "Start raffling",
     "email": "EMail Address",
     "email-placeholer": "EMail Address",
     "password": "Password",
-    "password_confirm": "Confirm Password",
     "login": "Log In",
     "forgot_password": "Forgot Password?",
     "logout": "Log Out",
-    "register": "Register"
+    "register": "Register",
+    "btn-login-google": "Login with Google",
+    "msgs": {
+      "logged-in": "If you aren't {email}<br/>then logout!"
+    }
   },
   "raffles": {
     "new": "New raffle",
-    "code": "Code",
+    "code": "Raffle Code:",
     "generate": "Generate",
     "liveUrl": "Live URL:",
     "view-raffle": "Raffle",
     "btn-confirm": "Confirm",
-    "participants": "Participants"
+    "participants": "Participants",
+    "liveUrl-placeholder": "Live URL"
   },
-  "errors": {
-    "login": {
-      "required": "Please fill this out.",
-      "standard": "A server error occurred."
-    },
-    "auth": {
-      "required": "Please fill this out.",
-      "standard": "A server error occurred."
+  "register": {
+    "header": "Enter your information",
+    "email": "Your EMail:",
+    "email-placeholder": "Email",
+    "name": "Name:",
+    "name-placeholder": "Display Name",
+    "password-placeholder": "Enter a new password (min 8 characters)",
+    "confirmpassword-placeholder": "Retype password",
+    "btn-confirm": "Confirm",
+    "channel-url": "Channel URL",
+    "channel-url-placeholder": "Channel URL",
+    "confirmpassword": "Retype password",
+    "msgs": {
+      "error-email-exists": "Email allready exists. <br/>Please login instead.",
+      "error-pass-weak": "Password is to weak",
+      "error-password-mismatch": "Passwords don't match"
     }
+  },
+  "account": {
+    "account-data": "Account Details",
+    "email": "EMail:",
+    "name": "Name:",
+    "name-placeholder": "Display Name"
   }
 }

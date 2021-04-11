@@ -3,7 +3,7 @@
     <div class="py-8">
       <div class="flex flex-row justify-between w-full mb-1 sm:mb-0">
         <h2 class="text-2xl font-extrabold leading-tight font-nunito">
-          Sorteios
+          {{ $t("raffles.raffles-title") }}
         </h2>
         <div class="text-end">
           <form class="flex w-full max-w-sm space-x-3">
@@ -11,11 +11,12 @@
               :to="localePath('/members/raffles/create')"
               class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
             >
-              <i class="fas fa-plus" />&nbsp;Novo</NuxtLink
+              <i class="fas fa-plus pr-2" />Novo</NuxtLink
             >
             <div class="relative">
               <input
                 type="text"
+                disabled
                 id="form-subscribe-Filter"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-transparent border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                 placeholder="texto a pesquisar"
@@ -24,8 +25,9 @@
             <button
               class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
               type="submit"
+              disabled
             >
-              <i class="fas fa-search" />&nbsp;Procurar
+              <i class="fas fa-search pr-2" />Procurar
             </button>
           </form>
         </div>
@@ -129,7 +131,7 @@
                     class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
                     :to="localePath(`/members/raffles/${raffle.id}`)"
                   >
-                    <i class="fas fa-eye" />&nbsp;Ver</NuxtLink
+                    <i class="fas fa-eye pr-2" />Ver</NuxtLink
                   >
                 </td>
               </tr>
@@ -139,13 +141,13 @@
                   colspan="5"
                 >
                   <p class="text-lg text-gray-900 whitespace-no-wrap">
-                    Ainda não criaste nenhum sorteio!
+                    {{ $t("raffles.msgs.no-raffles-found") }}
                   </p>
                 </td>
               </tr>
             </tbody>
           </table>
-          <ui-paginator v-if="raffles" />
+          <ui-paginator v-if="raffles.length > 20" />
         </div>
       </div>
     </div>

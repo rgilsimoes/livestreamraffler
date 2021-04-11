@@ -74,8 +74,16 @@ self.addEventListener('fetch', (event) => {
     return path.test(url.pathname.slice(1))
   })
 
+  // https://github.com/nuxt-community/firebase-module/issues/465
   if (!expectsHTML || !isSameOrigin || !isHttps || isIgnored) {
-    event.respondWith(fetch(event.request))
+    if (event.request.url.startsWith('https://www.googleapis.com/identitytoolkit/')) {
+      event.respondWith(
+        fetch({
+          ...event.request,
+          ...{ url: event.request.url.replace(/https:\/\//, 'http://localhost:9099/') }
+        })
+      )
+    } else event.respondWith(fetch(event.request))
 
     return
   }

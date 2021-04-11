@@ -12,7 +12,7 @@
         <div class="max-w-sm mx-auto md:w-full md:mx-0">
           <div class="inline-flex items-center space-x-4">
             <h1 class="text-xl font-semibold text-gray-600 font-abel">
-              Introduz os teus dados
+              {{ $t("register.header") }}
             </h1>
           </div>
         </div>
@@ -21,17 +21,19 @@
         <div
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">Email:</h2>
+          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+            {{ $t("register.email") }}
+          </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
               <input
-                v-model="userData.email"
+                v-model="newUser.email"
                 type="email"
                 autocomplete="email"
                 required
-                id="userData-email"
-                class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Email"
+                id="newUser-email"
+                class="flex-1 w-full px-4 py-2 font-medium text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                :placeholder="$t('register.email-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-at"
@@ -44,17 +46,19 @@
         <div
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">Nome:</h2>
+          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+            {{ $t("register.name") }}
+          </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
               <input
-                v-model="userData.name"
+                v-model="newUser.name"
                 type="text"
                 autocomplete="name"
                 required
-                id="userData-name"
-                class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Nome abreviado"
+                id="newUser-name"
+                class="flex-1 w-full px-4 py-2 font-medium text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                :placeholder="$t('register.name-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-user"
@@ -67,16 +71,16 @@
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
           <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
-            URL do canal:
+            {{ $t("register.channel-url") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
               <input
-                v-model="userData.channelUrl"
+                v-model="newUser.channelUrl"
                 type="text"
-                id="userData-channelUrl"
-                class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="URL do canal das lives"
+                id="newUser-channelUrl"
+                class="flex-1 w-full px-4 py-2 font-medium text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                :placeholder="$t('register.channel-url-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-anchor"
@@ -94,9 +98,12 @@
               <input
                 v-model="userPassWord"
                 type="password"
-                id="userData-password"
-                class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Password"
+                required
+                autocomplete
+                minlength="8"
+                id="newUser-userPassWord"
+                class="flex-1 w-full px-4 py-2 font-medium text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                :placeholder="$t('register.password-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-key"
@@ -109,16 +116,17 @@
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
           <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
-            Confirmação:
+            {{ $t("register.confirmpassword") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
               <input
                 v-model="userPassConf"
                 type="password"
-                id="userData-passwordConfirmation"
-                class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Confirma a password"
+                required
+                id="newUser-userPassConf"
+                class="flex-1 w-full px-4 py-2 font-medium text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                :placeholder="$t('register.confirmpassword-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-key"
@@ -137,7 +145,7 @@
             <i
               class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-check"
             />
-            Confirmar
+            {{ $t("register.btn-confirm") }}
           </button>
         </div>
       </div>
@@ -146,27 +154,22 @@
 </template>
 
 <script lang="ts">
+import { DocumentSnapshot } from "@google-cloud/firestore";
 import Vue from "vue";
 
 import toastaction from "~/components/ui/toastaction.vue";
 import User from "~/types/models/user";
 
-interface DataObject {
-  userData: User;
-  userPassWord: string;
-  userPassConf: string;
-}
-
 export default Vue.extend({
   name: "register",
-  data(): DataObject {
+  data: () => {
     return {
-      userData: {
+      newUser: {
         email: "",
         name: "",
         channelUrl: "",
-        status: 1, // Ativo
-      },
+        status: 1, // Active
+      } as User,
       userPassWord: "",
       userPassConf: "",
     };
@@ -176,47 +179,80 @@ export default Vue.extend({
      * Create Firebase User and Store aditional Data
      */
     async createUser() {
+      if (this.userPassWord !== this.userPassConf) {
+        this.$toast.warning(
+          {
+            component: toastaction,
+            props: {
+              mensagem: this.$t("register.msgs.error-password-mismatch"),
+            },
+          },
+          {
+            icon: "fas fa-exclamation-triangle",
+          }
+        );
+        return;
+      }
       try {
         await this.$fire.auth
-          .createUserWithEmailAndPassword(
-            this.userData.email,
-            this.userPassWord
-          )
+          .createUserWithEmailAndPassword(this.newUser.email, this.userPassWord)
           .then((registeredUser) => {
             this.$fire.firestore
               .collection("users")
               .add({
                 uid: registeredUser.user?.uid,
-                email: this.userData.email,
-                name: this.userData.name,
-                channelUrl: this.userData.channelUrl,
-                status: this.userData.status,
+                email: this.newUser.email,
+                name: this.newUser.name,
+                channelUrl: this.newUser.channelUrl,
+                status: this.newUser.status,
                 created_at: this.$fireModule.firestore.Timestamp.now(),
               })
               .then((data) => {
-                this.$toast.success(
-                  {
-                    component: toastaction,
-                    props: {
-                      mensagem: "Bem vindo " + data + "!",
+                data.get().then((user) => {
+                  //TODO - Update AuthUser DisplayName on Firebase
+                  const userData = user.data();
+
+                  this.$toast.success(
+                    {
+                      component: toastaction,
+                      props: {
+                        mensagem: this.$t("global.msgs.welcome", {
+                          name: userData?.name,
+                        }),
+                      },
                     },
-                  },
-                  {
-                    icon: "fas fa-exclamation-info",
-                  }
-                );
-                this.$router.push("/members/raffles");
+                    {
+                      icon: "fas fa-exclamation-info",
+                    }
+                  );
+                  this.$router.push("/members/raffles");
+                });
               });
           })
-          .catch(function (error) {
+          .catch((error) => {
             // Handle Errors here.
             var errorCode = error.code;
-            var errorMessage = error.message;
+            var errorMessage;
             if (errorCode == "auth/weak-password") {
-              alert("A password é demasiado fraca!");
+              errorMessage = this.$t("register.msgs.error-pass-weak");
+            } else if (errorCode == "auth/email-already-in-use") {
+              errorMessage = this.$t("register.msgs.error-email-exists");
             } else {
-              alert("Ocorreu um erro: " + errorMessage);
+              errorMessage =
+                this.$t("global.msgs.general-error") + "<br>" + error.message;
             }
+
+            this.$toast.error(
+              {
+                component: toastaction,
+                props: {
+                  mensagem: errorMessage,
+                },
+              },
+              {
+                icon: "fas fa-exclamation-triangle",
+              }
+            );
             console.log(error);
           });
       } catch (e) {
@@ -224,7 +260,7 @@ export default Vue.extend({
           {
             component: toastaction,
             props: {
-              mensagem: "Ocorreu um erro!<br>" + e,
+              mensagem: this.$t("global.msgs.general-error") + "<br>" + e,
             },
           },
           {

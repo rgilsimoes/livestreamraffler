@@ -24,7 +24,7 @@
                 <div
                   class="mt-1 text-sm font-medium leading-none text-gray-400"
                 >
-                  {{ authUser.displayName }}
+                  {{ userData.name }}
                 </div>
               </div>
               <img
@@ -34,7 +34,7 @@
                     ? authUser.photoURL
                     : require('@/assets/my_avatar.jpg')
                 "
-                alt="Avatar"
+                :alt="$t('global.avatar')"
               />
             </button>
           </div>
@@ -61,21 +61,21 @@
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   ><span class="pr-3"><i class="fas fa-user" /></span
-                  >Perfil</NuxtLink
+                  >{{ $t("global.menu.profile") }}</NuxtLink
                 >
                 <NuxtLink
                   to="/members/settings"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   ><span class="pr-3"><i class="fas fa-cog" /></span
-                  >Definições</NuxtLink
+                  >{{ $t("global.menu.settings") }}</NuxtLink
                 >
                 <Button
                   v-on:click="logout"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   ><span class="pr-3"><i class="fas fa-sign-out-alt" /></span
-                  >Terminar Sessão</Button
+                  >{{ $t("global.menu.logout") }}</Button
                 >
               </div>
             </div>
@@ -83,8 +83,9 @@
         </div>
       </div>
     </div>
+    <!-- Mobile Version -->
     <div class="flex -mr-2 md:hidden">
-      <!-- Mobile menu button -->
+      <!-- Menu button -->
       <button
         @click="toggle"
         class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
@@ -123,15 +124,26 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
+import User from "~/types/models/user";
 
 export default Vue.extend({
   name: "ProfileMenu",
-
+  data: () => {
+    return {
+      userData: {
+        name: "",
+      } as User,
+    };
+  },
+  created() {
+    if (this.channelUser) this.userData = this.channelUser;
+  },
   computed: {
     ...mapState({
       //Menu State
       isOpen: (state: any) => state.isOpen,
       authUser: (state: any) => state.authUser,
+      channelUser: (state: any) => state.channelUser,
     }),
   },
   methods: {

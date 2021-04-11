@@ -14,7 +14,7 @@
               $t("index.participate-subheading")
             }}</span>
             <div class="w-full py-10 text-center">
-              <form @submit.prevent="registerInRaffle">
+              <form @submit.prevent="checkRaffle">
                 <div class="flex items-center max-w-lg p-1 pr-0 mx-auto">
                   <input
                     v-model="raffleCode"
@@ -22,7 +22,7 @@
                     required
                     maxlength="8"
                     :placeholder="$t('index.enter-code')"
-                    class="flex-auto p-3 mr-2 text-gray-900 placeholder-gray-600 rounded shadow appearance-none focus:outline-none uppercase"
+                    class="flex-auto p-3 mr-2 font-medium text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent uppercase"
                   />
                   <button
                     type="submit"
@@ -62,41 +62,109 @@
           >
         </div>
       </div>
-      <ui-modal v-if="showModal" @close="showModal = false">
-        <h3>{{ raffle.code }}</h3>
-        <input
-          v-model="participantEmail"
-          type="email"
-          name="email"
-          autocomplete="email"
-          required
-          :placeholder="$t('login.email-placeholer')"
-          class="relative block w-full px-3 py-2 font-medium text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-lg"
-        />
-      </ui-modal>
+
+      <!-- Raffle participation modal form -->
+      <form @submit.prevent="registerInRaffle">
+        <ui-modal
+          v-if="showModal"
+          @close="showModal = false"
+          :title="$t('global.participate')"
+        >
+          <template v-slot:body>
+            <div
+              class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+            >
+              <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+                {{ $t("raffles.code") }}
+              </h2>
+              <div class="max-w-sm mx-auto md:w-3/4">
+                <div
+                  class="relative font-medium text-lg tracking-wider text-gray-900"
+                >
+                  {{ raffle.code }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+            >
+              <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+                {{ $t("raffles.liveUrl") }}
+              </h2>
+              <div class="max-w-sm mx-auto md:w-3/4">
+                <div
+                  class="relative font-medium text-lg tracking-wider text-gray-900"
+                >
+                  {{ raffle.liveUrl }}
+                </div>
+              </div>
+            </div>
+            <!-- EMail -->
+            <div
+              class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+            >
+              <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+                {{ $t("register.email") }}
+              </h2>
+              <div class="max-w-sm mx-auto md:w-3/4">
+                <div class="relative">
+                  <input
+                    v-model="participantEmail"
+                    type="email"
+                    required
+                    class="flex-1 w-full px-4 py-2 font-medium text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    :placeholder="$t('register.email-placeholder')"
+                  />
+                  <i
+                    class="absolute inset-y-0 flex items-center fas fa-at"
+                    style="right: 20px"
+                  />
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-slot:footer>
+            <button
+              type="submit"
+              class="px-5 py-2 text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
+            >
+              {{ $t("index.btn-participate") }}
+            </button>
+          </template>
+        </ui-modal>
+      </form>
+
+      <!-- Loading Spinner -->
+      <ui-loading :loadingMessage="$t('index.verify-raffle')" />
     </section>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import toastaction from "~/components/ui/toastaction.vue";
 import Raffle from "~/types/models/raffle";
+import Participant from "~/types/models/participant";
 
 export default Vue.extend({
   name: "index",
   data: () => ({
     raffleCode: "",
     raffle: {} as Raffle,
+    participant: {} as Participant,
     participantEmail: "",
     showModal: false,
   }),
   methods: {
-    async registerInRaffle() {
+    /** Check Raffle and Show Modal Participation Form */
+    async checkRaffle() {
+      this.$emit("toogleLoading", true);
       if (this.raffleCode !== "") {
         //Find Raffle
         await this.$fire.firestore
           .collection("raffles")
-          .where("code", "==", "U140FS60")
+          .where("code", "==", this.raffleCode)
+          .where("status", "==", 1)
           .get()
           .then((querySnapshot) => {
             if (querySnapshot.size == 1) {
@@ -104,10 +172,103 @@ export default Vue.extend({
                 id: querySnapshot.docs[0].id,
                 ...querySnapshot.docs[0].data(),
               };
+              this.showModal = true;
+            } else {
+              this.$toast.error(
+                {
+                  component: toastaction,
+                  props: {
+                    mensagem: this.$t("index.msgs.raffle-not-found"),
+                  },
+                },
+                {
+                  icon: "fas fa-exclamation-triangle",
+                }
+              );
             }
+          })
+          .catch((error) => {
+            console.error("Erro:" + error);
           });
-        this.showModal = true;
+        this.$emit("toogleLoading", false);
       }
+    },
+    /** Register EMail in Participan List */
+    async registerInRaffle() {
+      //Check if user as entered before
+      await this.$fire.firestore
+        .collection("raffles")
+        .doc(this.raffle.id)
+        .collection("participants")
+        .where("email", "==", this.participantEmail)
+        .get()
+        .then((querySnapshot) => {
+          if (querySnapshot.size == 1) {
+            this.participant = {
+              id: querySnapshot.docs[0].id,
+              ...querySnapshot.docs[0].data(),
+            };
+
+            this.$toast.warning(
+              {
+                component: toastaction,
+                props: {
+                  mensagem: this.$t("index.msgs.email-already-registered"),
+                },
+              },
+              {
+                icon: "fas fa-exclamation-triangle",
+              }
+            );
+
+            this.participantEmail = "";
+          } else {
+            //Register participant
+            try {
+              var raffleRef = this.$fire.firestore
+                .collection("raffles")
+                .doc(this.raffle.id)
+                .collection("participants");
+
+              raffleRef
+                .add({
+                  email: this.participantEmail,
+                  enterDate: this.$fireModule.firestore.Timestamp.now(),
+                })
+                .then((data) => {
+                  this.$toast.success(
+                    {
+                      component: toastaction,
+                      props: {
+                        mensagem: this.$t("index.msgs.email-registered"),
+                      },
+                    },
+                    {
+                      icon: "fas fa-exclamation-info",
+                    }
+                  );
+                  this.participantEmail = "";
+                  this.showModal = false;
+                });
+            } catch (e) {
+              this.$toast.error(
+                {
+                  component: toastaction,
+                  props: {
+                    mensagem:
+                      this.$t("global.msgs.general-error") + "<br/>" + e,
+                  },
+                },
+                {
+                  icon: "fas fa-exclamation-triangle",
+                }
+              );
+            }
+          }
+        })
+        .catch((error) => {
+          console.error("Erro:" + error);
+        });
     },
   },
 });

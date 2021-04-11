@@ -14,7 +14,7 @@
           <div class="flex-shrink-0">
             <a href="/">
               <span
-                class="p-5 text-2xl antialiased font-extrabold tracking-wide text-white overflow-ellipsis"
+                class="p-2 md:p-5 sm:text-xs md:text-2xl antialiased font-extrabold md:tracking-wide text-white overflow-ellipsis"
                 >{{ $t("global.app-title") }}</span
               ></a
             >
@@ -35,24 +35,23 @@
             </div>
           </div>
         </div>
-        <div class="flex gap-5">
+        <div class="flex gap-3 md:gap-5">
           <!-- Right Menu -->
-          <button
+          <NuxtLink
+            :to="localePath('/login')"
             v-if="!isLoggedIn"
             class="inline-flex items-center px-4 py-2 font-medium text-white bg-pink-700 rounded hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
-          >
-            <NuxtLink :to="localePath('/login')">{{
+            ><span class="hidden sm:block pr-4">{{
               $t("global.btn-login")
-            }}</NuxtLink>
-            <i class="pl-4 fas fa-sign-in-alt" style="font-size: 24px" />
-          </button>
-
+            }}</span>
+            <i class="fas fa-sign-in-alt" style="font-size: 24px" />
+          </NuxtLink>
           <ProfileMenu v-else />
 
           <div>
             <div class="relative inline-block dropdown">
               <button
-                class="inline-flex items-center px-4 py-2 font-semibold text-gray-700 bg-gray-300 rounded w-32 justify-between"
+                class="inline-flex items-center px-4 py-2 font-semibold text-gray-700 bg-gray-300 rounded md:w-32 justify-between"
               >
                 <span class="mr-1">{{
                   $i18n.locales.find((x) => x.code === $i18n.locale).name
@@ -71,8 +70,14 @@
                 <li v-for="lang in $i18n.locales" :key="lang.code">
                   <nuxt-link
                     :to="switchLocalePath(lang.code)"
-                    class="items-baseline block px-4 py-2 whitespace-no-wrap bg-gray-200 rounded-t hover:bg-gray-400"
-                    ><country-flag :country="lang.flag" size="small" />
+                    class="items-baseline block px-4 py-2 whitespace-no-wrap bg-gray-200 hover:bg-gray-400"
+                    ><span
+                      :class="[
+                        lang.flag,
+                        'sm:hidden md:block flag small-flag rounded',
+                      ]"
+                    >
+                    </span>
                     {{ lang.name }}</nuxt-link
                   >
                 </li>
@@ -82,6 +87,7 @@
         </div>
       </div>
     </div>
+    <MobileMenu />
   </nav>
 </template>
 
@@ -131,5 +137,17 @@ export default Vue.extend({
 
 .topMenu a.nuxt-link-exact-active {
   @apply text-white bg-gray-900 rounded-md;
+}
+
+.small-flag {
+  margin: -15px -22px -15px -22px;
+  transform: scale(0.25);
+  -ms-transform: scale(0.25);
+  -webkit-transform: scale(0.25);
+  -moz-transform: scale(0.25);
+}
+.small-flag.rounded {
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
 </style>

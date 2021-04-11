@@ -1,33 +1,36 @@
 <template>
   <transition name="fade">
     <div class="fixed inset-0 z-30">
-      <!--       background -->
+      <!-- modal background -->
       <div
         @click="$emit('close')"
-        class="fixed inset-0 z-20 w-full h-full bg-black opacity-50 bg-filter"
+        class="fixed inset-0 z-20 w-full h-full bg-tuna-700 bg-opacity-70 bg-filter"
       ></div>
-      <!--          -->
+      <!-- modal box-->
       <main class="flex flex-col items-center justify-center w-full h-full">
         <transition name="fade-up-down">
-          <div class="z-30 flex items-center modal-wrapper">
+          <div class="z-30 flex items-center modal-wrapper w-full">
             <div
-              class="relative flex-row max-w-md max-h-screen mx-auto bg-white rounded shadow-lg modal xl:max-w-5xl lg:max-w-2xl md:max-w-xl"
+              class="relative flex-row w-1/2 max-h-screen mx-auto bg-white rounded shadow-lg modal xl:max-w-5xl lg:max-w-2xl md:max-w-xl"
             >
-              <div class="p-5 text-gray-900 bg-gray-900 rounded-t modal-header">
-                <h5 class="text-2xl text-white uppercase">{{ titulo }}</h5>
+              <div
+                class="p-5 text-gray-900 bg-gray-900 rounded-t modal-header flex justify-between"
+              >
+                <h5 class="text-2xl text-white">{{ title }}</h5>
+                <button
+                  class="px-2 py-2 text-white bg-pink-700 rounded hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
+                  @click="$emit('close')"
+                >
+                  {{ $t("global.btn-close") }}
+                </button>
               </div>
               <div class="w-full h-full p-5 overflow-y-auto modal-body">
                 <p class="text-justify">
-                  <slot><span v-html="mensagem"></span></slot>
+                  <slot name="body"><span v-html="content"></span></slot>
                 </p>
               </div>
-              <div class="px-5 py-3 text-right modal-footer border0-t">
-                <button
-                  class="px-5 py-2 text-white bg-green-500"
-                  @click="$emit('close')"
-                >
-                  Fechar
-                </button>
+              <div class="px-5 py-3 modal-footer border0-t">
+                <slot name="footer"></slot>
               </div>
             </div>
           </div>
@@ -46,13 +49,13 @@ export default Vue.extend({
     return {};
   },
   props: {
-    titulo: {
+    title: {
       type: String,
-      default: "Informação",
+      default: "Tittle",
     },
-    mensagem: {
+    content: {
       type: String,
-      default: "Substitua esta mensagem.<br>Pode ser?",
+      default: "Inline content",
     },
   },
   methods: {},

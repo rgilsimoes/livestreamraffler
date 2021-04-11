@@ -4,7 +4,7 @@
   >
     <form
       class="container max-w-2xl mx-auto shadow-md md:w-3/4"
-      @submit.prevent="createUser"
+      @submit.prevent="updateUser"
     >
       <div
         class="flex flex-col p-4 bg-gray-200 border-t-2 border-indigo-400 rounded-lg bg-opacity-5"
@@ -12,7 +12,7 @@
         <div class="max-w-sm mx-auto md:w-full md:mx-0">
           <div class="inline-flex items-center space-x-4">
             <h1 class="text-xl font-semibold text-gray-600 font-abel">
-              Dados da conta
+              {{ $t("account.account-data") }}
             </h1>
           </div>
         </div>
@@ -21,22 +21,12 @@
         <div
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">Email:</h2>
+          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+            {{ $t("account.email") }}
+          </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
-              <input
-                v-model="userData.email"
-                type="email"
-                autocomplete="email"
-                required
-                id="userData-email"
-                class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Email"
-              />
-              <i
-                class="absolute inset-y-0 flex items-center fas fa-at"
-                style="right: 20px"
-              />
+              {{ userData.email }}
             </div>
           </div>
         </div>
@@ -44,20 +34,20 @@
         <div
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">Nome:</h2>
+          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+            {{ $t("account.name") }}
+          </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
               <input
                 v-model="userData.name"
                 type="text"
-                autocomplete="name"
-                required
                 id="userData-name"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Nome abreviado"
+                :placeholder="$t('account.name-placeholder')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-user"
+                class="absolute inset-y-0 flex items-center fas fa-person"
                 style="right: 20px"
               />
             </div>
@@ -147,36 +137,37 @@
 
 <script lang="ts">
 import Vue from "vue";
-
+import { mapState } from "vuex";
 import toastaction from "~/components/ui/toastaction.vue";
 import User from "~/types/models/user";
-
-interface DataObject {
-  userData: User;
-  userPassWord: string;
-  userPassConf: string;
-}
 
 export default Vue.extend({
   name: "account",
   middleware: ["members"],
-  data(): DataObject {
+  data: () => {
     return {
       userData: {
         email: "",
         name: "",
         channelUrl: "",
-        status: 1, // Ativo
-      },
+      } as User,
       userPassWord: "",
       userPassConf: "",
     };
+  },
+  mounted() {
+    this.userData = this.channelUser;
+  },
+  computed: {
+    ...mapState({
+      channelUser: (state: any) => state.channelUser,
+    }),
   },
   methods: {
     /**
      * Create Firebase User and Store aditional Data
      */
-    async createUser() {
+    async updateUser() {
       try {
         await this.$fire.auth
           .createUserWithEmailAndPassword(
@@ -241,3 +232,11 @@ export default Vue.extend({
 });
 </script>
 
+
+function mapState(arg0: { raffles: (state: any) => any; }): import("vue/types/options").Accessors<unknown>|undefined {
+  throw new Error("Function not implemented.");
+}
+
+function mapState(arg0: { raffles: (state: any) => any; }): import("vue/types/options").Accessors<unknown>|undefined {
+  throw new Error("Function not implemented.");
+}

@@ -20,9 +20,9 @@
       </div>
       <div class="space-y-3 bg-white">
         <div
-          class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          class="sm:flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+          <h2 class="max-w-sm mx-auto sm:text-right md:w-1/4">
             {{ $t("raffles.code") }}
           </h2>
           <div class="flex max-w-sm gap-3 mx-auto md:w-3/5">
@@ -34,7 +34,7 @@
                 readonly
                 id="newRaffle-code"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="$t('raffles.code')"
+                :placeholder="$t('raffles.code')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-qrcode"
@@ -59,7 +59,7 @@
         <div
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+          <h2 class="max-w-sm mx-auto text-right md:w-1/4">
             {{ $t("raffles.liveUrl") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
@@ -70,7 +70,7 @@
                 required
                 id="newRaffle-name"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="$t('raffles.liveUrl')"
+                :placeholder="$t('raffles.liveUrl-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-anchor"
@@ -82,8 +82,8 @@
         <div
           class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
-            Nº de vencedores:
+          <h2 class="max-w-sm mx-auto text-right md:w-1/4">
+            {{ $t("raffles.winners") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
@@ -95,7 +95,7 @@
                 required
                 id="newRaffle-status"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none noarrow focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Número de vencedores"
+                :placeholder="$t('raffles.winners-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-gift"
@@ -114,7 +114,7 @@
             <i
               class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-check"
             />
-            Confirmar
+            {{ $t("raffles.btn-confirm") }}
           </button>
         </div>
       </div>
@@ -172,10 +172,12 @@ export default Vue.extend({
     async createRaffle() {
       try {
         // Reference to owner
-        debugger;
         let refUser = this.$fire.firestore.doc(
           `users/${this.channelUser.docId}`
         );
+
+        this.newRaffle.user = refUser;
+        this.newRaffle;
 
         await this.$fire.firestore
           .collection("raffles")
@@ -192,14 +194,14 @@ export default Vue.extend({
               {
                 component: toastaction,
                 props: {
-                  mensagem: "Sorteio criado!",
+                  mensagem: this.$t("raffles.msgs.raffle-created"),
                 },
               },
               {
                 icon: "fas fa-exclamation-info",
               }
             );
-            this.$router.push(`/members/raffles/${data.id}`);
+            this.$router.push(this.localePath(`/members/raffles/${data.id}`));
           });
       } catch (e) {
         console.log(e);
@@ -207,7 +209,7 @@ export default Vue.extend({
           {
             component: toastaction,
             props: {
-              mensagem: "Ocorreu um erro!<br>" + e,
+              mensagem: this.$t("global.msgs.general-error") + "<br>" + e,
             },
           },
           {

@@ -22,13 +22,15 @@ export const actions = {
       .get()
       .then(querySnapshot => {
         let raffleCol = [];
+
         querySnapshot.forEach(doc => {
           let raffle = {
             id: doc.id,
-            //channelId: doc.data().channelId,
+            uid: doc.data().uid,
             code: doc.data().code,
             liveUrl: doc.data().liveUrl,
             status: doc.data().status,
+            winners: doc.data().winners,
             createdAt: doc.data().created_at.toDate()
           };
           raffleCol.push(raffle);

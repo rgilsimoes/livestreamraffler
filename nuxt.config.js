@@ -7,7 +7,11 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" }
+      {
+        hid: "description",
+        name: "description",
+        content: "A simple way to raffle when live streamming!"
+      }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
@@ -99,7 +103,7 @@ export default {
         //enablePersistence: true,
         emulatorPort: process.env.NODE_ENV === "development" ? 8080 : undefined
       },
-      performance: true,
+      //performance: true,
       analytics: true
     }
   },
@@ -133,21 +137,21 @@ export default {
         iso: "pt-PT",
         name: "Português",
         file: "pt.json",
-        flag: "pt"
+        flag: "f-pt"
       },
       {
         code: "en",
         iso: "en-US",
         name: "English",
         file: "en.json",
-        flag: "us"
+        flag: "f-us"
       },
       {
         code: "es",
         iso: "es-ES",
         name: "Epanhol",
         file: "es.json",
-        flag: "es"
+        flag: "f-es"
       }
     ],
     defaultLocale: "pt",
