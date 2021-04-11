@@ -233,12 +233,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-
-function mapState(arg0: { raffles: (state: any) => any; }): import("vue/types/options").Accessors<unknown>|undefined {
-  throw new Error("Function not implemented.");
-}
-
-function mapState(arg0: { raffles: (state: any) => any; }): import("vue/types/options").Accessors<unknown>|undefined {
-  throw new Error("Function not implemented.");
-}
