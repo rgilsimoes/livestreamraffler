@@ -1,0 +1,110 @@
+{
+  "global": {
+    "app-title": "Live Stream Raffler",
+    "sub-title": "Hoje pode ser o teu dia de sorte!",
+    "btn-login": "Entrar",
+    "link-help-faq": "Perguntas Frequentes",
+    "link-about": "Acerca",
+    "link-terms": "Privacidade e Termos de Uso",
+    "link-home": "Início",
+    "link-raffles": "Sorteios",
+    "loading-text": "Aguarde...",
+    "btn-close": "Fechar",
+    "participate": "Participar no sorteio",
+    "msgs": {
+      "general-error": "Ocorreu um erro:",
+      "welcome": "Bem vindo {name}!"
+    },
+    "avatar": "Avatar",
+    "menu": {
+      "profile": "Perfil",
+      "settings": "Definições",
+      "logout": "Terminar Sessão"
+    }
+  },
+  "index": {
+    "participate-heading": "Queres participar num sorteio?",
+    "participate-subheading": "Introduz o código do sorteio!",
+    "enter-code": "Introduz o código do sorteio!",
+    "create-heading": "Queres fazer um sorteio com quem está a assitir às tuas \"Lives\"?",
+    "create-subheading": "É fácil! Esquece os processos manuais!",
+    "btn-participate": "Participar",
+    "btn-register": "Regista-te",
+    "link-howto": "Vê como funciona",
+    "verify-raffle": "A verificar o código",
+    "msgs": {
+      "raffle-not-found": "Este sorteio não existe ou já terminou!",
+      "email-already-registered": "Este E-Mail já está registado!<br/> Fica atento à Live para o sorteio!",
+      "email-registered": "O teu e-mail foi registado!<br/> Obrigado por participares!"
+    }
+  },
+  "login": {
+    "start-heading": "Começa a sortear",
+    "email": "Endereço de E-Mail",
+    "email-placeholer": "Endereço de EMail",
+    "password": "Password",
+    "login": "Entrar",
+    "forgot_password": "Recuperar Password?",
+    "logout": "Terminar Sessão",
+    "register": "Registar",
+    "btn-login-google": "Login com o Google",
+    "msgs": {
+      "logged-in": "Não és o {email}?<br />Então faz \"Terminar Sessão\"!"
+    }
+  },
+  "raffles": {
+    "new": "Novo Sorteio",
+    "code": "Código do Sorteio:",
+    "generate": "Gerar",
+    "liveUrl": "URL da Live:",
+    "view-raffle": "Sorteio",
+    "btn-confirm": "Confirmar",
+    "participants": "Participantes",
+    "msgs": {
+      "no-raffles-found": "Ainda não criaste nenhum sorteio!",
+      "raffle-created": "Sorteio criado!",
+      "no-participants-found": "Ainda não há participantes!"
+    },
+    "raffles-title": "Sorteios",
+    "liveUrl-placeholder": "URL da Live",
+    "winners": "Núm. de vencedores:",
+    "winners-placeholder": "Núm. de vencedores",
+    "btn-update": "Atualizar",
+    "create-date": "Data Sorteio:",
+    "create-date-placeholder": "Data Sorteio",
+    "btn-raffle": "Sortear",
+    "btn-cancelar": "Cancelar",
+    "status": ["Ativo", "Sorteado", "Cancelado"]
+  },
+  "register": {
+    "email": "O teu E-Mail:",
+    "email-placeholder": "Endereço de E-Mail",
+    "header": "Introduz os teus dados",
+    "name": "Nome:",
+    "name-placeholder": "Nome abreviado",
+    "btn-confirm": "Confirmar",
+    "confirmpassword-placeholder": "Confirme a password",
+    "password-placeholder": "Introduza a password (min 8 caracteres)",
+    "msgs": {
+      "error-pass-weak": "A password é demasiado fraca!",
+      "error-email-exists": "O e-mail já foi registado!<br>Efetue antes o login.",
+      "error-password-mismatch": "As passwords não coincidem!"
+    },
+    "channel-url": "\r\n            URL do canal:\r\n",
+    "channel-url-placeholder": "URL do canal das lives",
+    "confirmpassword": "Confirmação:"
+  },
+  "account": {
+    "account-data": "Dados da conta",
+    "email": "Email:",
+    "name": "Nome:",
+    "name-placeholder": "Nome abreviado",
+    "channelURL": "URL do canal:",
+    "channel-url-placeholder": "URL do canal das lives",
+    "password": "Password:",
+    "password-placeholder": "Password",
+    "confirm-password": "Confirmação:",
+    "confirm-password-placeholder": "Confirma a password",
+    "btn-update": "Actualizar"
+  }
+}

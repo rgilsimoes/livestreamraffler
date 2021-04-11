@@ -1,8 +1,8 @@
 const ignorePaths = ["\u002F__webpack_hmr","\u002F_loading","\u002F_nuxt\u002F"]
 
 // Only works on Firebase hosting!
-importScripts('/__/firebase/8.2.5/firebase-app.js')
-importScripts('/__/firebase/8.2.5/firebase-auth.js')
+importScripts('/__/firebase/8.3.3/firebase-app.js')
+importScripts('/__/firebase/8.3.3/firebase-auth.js')
 importScripts('/__/firebase/init.js')
 
 // Initialize authService
@@ -69,9 +69,8 @@ self.addEventListener('fetch', (event) => {
     return path.test(url.pathname.slice(1))
   })
 
-  // https://github.com/nuxt-community/firebase-module/issues/465
   if (!expectsHTML || !isSameOrigin || !isHttps || isIgnored) {
-      event.respondWith(fetch(event.request))
+    event.respondWith(fetch(event.request))
 
     return
   }
