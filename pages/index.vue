@@ -164,10 +164,12 @@ export default Vue.extend({
         await this.$fire.firestore
           .collection("raffles")
           .where("code", "==", this.raffleCode)
-          .where("status", "==", 1)
+          .where("status", "==", 0)
           .get()
           .then((querySnapshot) => {
+            console.log(querySnapshot);
             if (querySnapshot.size == 1) {
+              console.log("asdasd");
               this.raffle = {
                 id: querySnapshot.docs[0].id,
                 ...querySnapshot.docs[0].data(),

@@ -57,9 +57,9 @@
         </div>
         <hr />
         <div
-          class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          class="sm:flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm mx-auto text-right md:w-1/4">
+          <h2 class="max-w-sm mx-auto sm:text-right md:w-1/4">
             {{ $t("raffles.liveUrl") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
@@ -80,9 +80,9 @@
           </div>
         </div>
         <div
-          class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          class="sm:flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm mx-auto text-right md:w-1/4">
+          <h2 class="max-w-sm mx-auto sm:text-right md:w-1/4">
             {{ $t("raffles.winners") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
@@ -137,7 +137,7 @@ export default Vue.extend({
       channelId: 0,
       newRaffle: {
         code: "",
-        status: 1,
+        status: 0, //0 - Active, 1 - Drawn, 2 - Canceled
       } as Raffle,
     };
   },

@@ -91,7 +91,7 @@
                   <p class="text-gray-900 whitespace-no-wrap">
                     {{
                       raffle.createdAt != undefined
-                        ? raffle.createdAt.toLocaleDateString("pt-PT")
+                        ? raffle.createdAt.toLocaleDateString($i18n.locale)
                         : ""
                     }}
                   </p>
@@ -107,7 +107,9 @@
                       class="absolute inset-0 bg-green-200 rounded-full opacity-50"
                     >
                     </span>
-                    <span class="relative"> {{ raffle.status }} </span>
+                    <span class="relative">
+                      {{ $t(`raffles.status[${raffle.status}]`) }}
+                    </span>
                   </span>
                 </td>
                 <td

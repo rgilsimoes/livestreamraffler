@@ -60,7 +60,14 @@
     "view-raffle": "Raffle",
     "btn-confirm": "Confirm",
     "participants": "Participants",
-    "liveUrl-placeholder": "Live URL"
+    "liveUrl-placeholder": "Live URL",
+    "btn-update": "Update",
+    "msgs": {
+      "no-participants-found": "No participants registered yet!"
+    },
+    "btn-raffle": "Draw",
+    "btn-cancelar": "Cancel",
+    "status": ["Active", "Drawn", "Canceled"]
   },
   "register": {
     "header": "Enter your information",

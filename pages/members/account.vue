@@ -19,9 +19,9 @@
       </div>
       <div class="space-y-3 bg-white">
         <div
-          class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          class="sm:flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+          <h2 class="max-w-sm px-2 mx-auto sm:text-right md:w-1/4">
             {{ $t("account.email") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
@@ -32,9 +32,9 @@
         </div>
         <hr />
         <div
-          class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          class="sm:flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+          <h2 class="max-w-sm px-2 mx-auto sm:text-right md:w-1/4">
             {{ $t("account.name") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
@@ -54,10 +54,10 @@
           </div>
         </div>
         <div
-          class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          class="sm:flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
-            URL do canal:
+          <h2 class="max-w-sm px-2 mx-auto sm:text-right md:w-1/4">
+            {{ $t("account.channelURL") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
@@ -66,7 +66,7 @@
                 type="text"
                 id="userData-channelUrl"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="URL do canal das lives"
+                :placeholder="$t('account.channel-url-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-anchor"
@@ -76,9 +76,11 @@
           </div>
         </div>
         <div
-          class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          class="sm:flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">Password:</h2>
+          <h2 class="max-w-sm px-2 mx-auto sm:text-right md:w-1/4">
+            {{ $t("account.password") }}
+          </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
               <input
@@ -86,7 +88,7 @@
                 type="password"
                 id="userData-password"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Password"
+                :placeholder="$t('account.password-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-key"
@@ -96,10 +98,10 @@
           </div>
         </div>
         <div
-          class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          class="sm:flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
         >
-          <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
-            Confirmação:
+          <h2 class="max-w-sm px-2 mx-auto sm:text-right md:w-1/4">
+            {{ $t("account.confirm-password") }}
           </h2>
           <div class="max-w-sm mx-auto md:w-3/4">
             <div class="relative">
@@ -108,7 +110,7 @@
                 type="password"
                 id="userData-passwordConfirmation"
                 class="flex-1 w-full px-4 py-2 text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="Confirma a password"
+                :placeholder="$t('account.confirm-password-placeholder')"
               />
               <i
                 class="absolute inset-y-0 flex items-center fas fa-key"
@@ -127,7 +129,7 @@
             <i
               class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-check"
             />
-            Confirmar
+            {{ $t("account.btn-update") }}
           </button>
         </div>
       </div>

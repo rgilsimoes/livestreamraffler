@@ -62,12 +62,19 @@
     "participants": "Participantes",
     "msgs": {
       "no-raffles-found": "Ainda não criaste nenhum sorteio!",
-      "raffle-created": "Sorteio criado!"
+      "raffle-created": "Sorteio criado!",
+      "no-participants-found": "Ainda não há participantes!"
     },
     "raffles-title": "Sorteios",
     "liveUrl-placeholder": "URL da Live",
     "winners": "Núm. de vencedores:",
-    "winners-placeholder": "Núm. de vencedores"
+    "winners-placeholder": "Núm. de vencedores",
+    "btn-update": "Atualizar",
+    "create-date": "Data Sorteio:",
+    "create-date-placeholder": "Data Sorteio",
+    "btn-raffle": "Sortear",
+    "btn-cancelar": "Cancelar",
+    "status": ["Ativo", "Sorteado", "Cancelado"]
   },
   "register": {
     "email": "O teu E-Mail:",
@@ -91,6 +98,13 @@
     "account-data": "Dados da conta",
     "email": "Email:",
     "name": "Nome:",
-    "name-placeholder": "Nome abreviado"
+    "name-placeholder": "Nome abreviado",
+    "channelURL": "URL do canal:",
+    "channel-url-placeholder": "URL do canal das lives",
+    "password": "Password:",
+    "password-placeholder": "Password",
+    "confirm-password": "Confirmação:",
+    "confirm-password-placeholder": "Confirma a password",
+    "btn-update": "Actualizar"
   }
 }

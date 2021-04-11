@@ -1,5 +1,5 @@
-export default interface Raffle {
+export default interface Participant {
   id?: string
   email?: string
-  enterDate?: firebase.default.firestore.Timestamp
+  enterDate?: Date
 }
