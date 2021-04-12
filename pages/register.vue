@@ -253,7 +253,6 @@ export default Vue.extend({
                 icon: "fas fa-exclamation-triangle",
               }
             );
-            console.log(error);
           });
       } catch (e) {
         this.$toast.error(

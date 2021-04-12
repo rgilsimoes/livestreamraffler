@@ -204,7 +204,6 @@ export default Vue.extend({
             this.$router.push(this.localePath(`/members/raffles/${data.id}`));
           });
       } catch (e) {
-        console.log(e);
         this.$toast.error(
           {
             component: toastaction,

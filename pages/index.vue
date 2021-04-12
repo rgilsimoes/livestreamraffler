@@ -167,9 +167,7 @@ export default Vue.extend({
           .where("status", "==", 0)
           .get()
           .then((querySnapshot) => {
-            console.log(querySnapshot);
             if (querySnapshot.size == 1) {
-              console.log("asdasd");
               this.raffle = {
                 id: querySnapshot.docs[0].id,
                 ...querySnapshot.docs[0].data(),

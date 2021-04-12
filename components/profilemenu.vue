@@ -137,8 +137,8 @@ export default Vue.extend({
     };
   },
   async created() {
+    //Load Channel User
     await this.$store.dispatch("loadUserObject", { authUser: this.authUser });
-    console.log("ProfileMenu", this.channelUser);
     if (this.channelUser) this.userData = this.channelUser;
   },
   computed: {
