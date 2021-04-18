@@ -115,6 +115,7 @@
         <hr />
         <div class="flex w-full px-4 pb-4 ml-auto text-gray-500 md:w-2/3">
           <button
+            @click.prevent="showModal = true"
             type="submit"
             class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
@@ -140,11 +141,20 @@
       <div
         class="flex flex-col p-4 bg-gray-200 border-t-2 border-indigo-400 rounded-lg bg-opacity-5 mt-5"
       >
-        <div class="max-w-sm mx-auto md:w-full md:mx-0">
+        <div class="flex justify-between">
           <div class="inline-flex items-center space-x-4">
             <h1 class="text-2xl font-semibold text-gray-600 font-abel">
-              {{ $t("raffles.participants") }}
+              {{ $t("raffles.participants.participants") }}
             </h1>
+          </div>
+          <div class="inline-flex items-center space-x-4">
+            <button
+              @click.prevent="loadParticipants"
+              type="button"
+              class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-400 rounded shadow-md hover:bg-pink-800"
+            >
+              <i class="fas fa-sync-alt" />
+            </button>
           </div>
         </div>
       </div>
@@ -158,13 +168,19 @@
                   scope="col"
                   class="px-5 py-3 text-sm font-bold text-left text-gray-800 bg-white border-b border-gray-200 w-3/5"
                 >
-                  E-Mail
+                  {{ $t("raffles.participants.nick-name") }}
+                </th>
+                <th
+                  scope="col"
+                  class="px-5 py-3 text-sm font-bold text-left text-gray-800 bg-white border-b border-gray-200 w-3/5"
+                >
+                  {{ $t("raffles.participants.email") }}
                 </th>
                 <th
                   scope="col"
                   class="px-5 py-3 text-sm font-bold text-center text-gray-800 bg-white border-b border-gray-200 w-1/5"
                 >
-                  Data
+                  {{ $t("raffles.participants.date") }}
                 </th>
                 <th
                   scope="col"
@@ -177,6 +193,11 @@
                 v-for="participant in raffle.participants"
                 :key="participant.id"
               >
+                <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    {{ participant.nickName }}
+                  </p>
+                </td>
                 <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                   <p class="text-gray-900 whitespace-no-wrap">
                     {{ participant.email }}
@@ -196,12 +217,12 @@
                 <td
                   class="px-5 py-5 text-sm text-center bg-white border-b border-gray-200"
                 >
-                  <NuxtLink
-                    class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
-                    :to="localePath(`/members/raffles/${raffle.id}`)"
+                  <button
+                    type="button"
+                    class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-400 rounded shadow-md hover:bg-pink-800"
                   >
-                    <i class="fas fa-trash"
-                  /></NuxtLink>
+                    <i class="fas fa-trash" />
+                  </button>
                 </td>
               </tr>
               <tr v-if="!raffle.participants">
@@ -220,6 +241,46 @@
         </div>
       </div>
     </div>
+
+    <!-- Raffle participation modal form -->
+    <form>
+      <ui-modal
+        v-if="showModal"
+        @close="showModal = false"
+        :title="$t('raffles.draw-winners')"
+      >
+        <template v-slot:body>
+          <div
+            class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+          >
+            <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+              {{ $t("raffles.code") }}
+            </h2>
+            <div class="max-w-sm mx-auto md:w-3/4">
+              <div
+                class="relative text-gray-900 border-gray-400 border border-transparent rounded-md p-2 shadow-sm"
+              >
+                <i
+                  class="absolute inset-y-0 flex items-center fas fa-calendar text-gray-500"
+                  style="right: 20px"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-slot:footer>
+          <button
+            type="submit"
+            class="px-5 py-2 text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
+          >
+            {{ $t("raffles.btn-close") }}
+          </button>
+        </template>
+      </ui-modal>
+    </form>
+
+    <!-- Loading Spinner -->
+    <ui-loading :loadingMessage="$t('raffles.msgs.loading-participants')" />
   </section>
 </template>
 
@@ -240,6 +301,7 @@ export default Vue.extend({
       raffle: {
         code: "",
       } as Raffle,
+      showModal: false,
     };
   },
   computed: {
@@ -258,6 +320,9 @@ export default Vue.extend({
   },
   methods: {
     async loadParticipants() {
+      this.$emit("toogleLoading", true);
+
+      //Load Participants
       let participantsCol = Array<Participant>();
       try {
         await this.$fire.firestore
@@ -271,15 +336,32 @@ export default Vue.extend({
               let participant = {
                 id: doc.id,
                 email: doc.data().email,
+                nickName: doc.data().nickName,
                 enterDate: doc.data().enterDate.toDate(),
               };
               participantsCol.push(participant);
             });
           });
         this.raffle.participants = participantsCol;
+        this.$emit("toogleLoading", false);
       } catch (error) {
         console.log(error);
       }
+    },
+    async drawWinners() {},
+    getRandomWinners() {
+      let winners = [];
+      if (this.raffle.participants && this.raffle.winners) {
+        for (let winner = 0; winner < this.raffle.winners; winner++) {
+          var rnd =
+            Math.random() * (0 - this.raffle.participants?.length) +
+            this.raffles.participants.length;
+
+          rnd = Math.floor(rnd) - 1;
+          winners.push(rnd);
+        }
+      }
+      return winners;
     },
   },
 });

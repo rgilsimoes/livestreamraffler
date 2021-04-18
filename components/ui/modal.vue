@@ -14,10 +14,11 @@
               class="relative flex-row w-1/2 max-h-screen mx-auto bg-white rounded shadow-lg modal xl:max-w-5xl lg:max-w-2xl md:max-w-xl"
             >
               <div
-                class="p-5 text-gray-900 bg-gray-900 rounded-t modal-header flex justify-between"
+                class="p-3 text-gray-900 bg-gray-900 rounded-t modal-header flex justify-between"
               >
                 <h5 class="text-2xl text-white">{{ title }}</h5>
                 <button
+                  type="button"
                   class="px-2 py-2 text-white bg-pink-700 rounded hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
                   @click="$emit('close')"
                 >

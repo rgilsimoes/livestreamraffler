@@ -1,7 +1,7 @@
 <template>
   <div
     v-show="isLoading"
-    class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-10 overflow-hidden bg-tuna-700 flex flex-col items-center justify-center bg-opacity-70"
+    class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-tuna-700 flex flex-col items-center justify-center bg-opacity-70"
   >
     <div
       class="bg-tuna-500 z-20 flex flex-col items-center justify-center w-1/3 h-1/4"

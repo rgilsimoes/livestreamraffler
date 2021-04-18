@@ -59,7 +59,11 @@
     "liveUrl": "Live URL:",
     "view-raffle": "Raffle",
     "btn-confirm": "Confirm",
-    "participants": "Participants",
+    "participants": {
+      "participants": "Participants",
+      "email": "EMail",
+      "date": "Date"
+    },
     "liveUrl-placeholder": "Live URL",
     "btn-update": "Update",
     "msgs": {

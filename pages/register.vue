@@ -154,7 +154,6 @@
 </template>
 
 <script lang="ts">
-import { DocumentSnapshot } from "@google-cloud/firestore";
 import Vue from "vue";
 
 import toastaction from "~/components/ui/toastaction.vue";

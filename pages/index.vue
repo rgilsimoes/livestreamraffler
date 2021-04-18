@@ -26,7 +26,7 @@
                   />
                   <button
                     type="submit"
-                    class="w-2/5 p-3 font-semibold text-white bg-indigo-600 rounded shadow hover:bg-indigo-700"
+                    class="w-2/5 p-3 font-semibold text-white bg-purple-600 rounded shadow hover:bg-purple-700"
                   >
                     {{ $t("index.btn-participate") }}
                   </button>
@@ -51,12 +51,12 @@
 
         <div class="py-10">
           <NuxtLink
-            class="inline-block px-8 py-4 mr-6 font-semibold leading-none text-white bg-indigo-600 rounded shadow hover:bg-indigo-700"
+            class="inline-block px-8 py-4 mr-6 font-semibold leading-none text-white bg-purple-600 rounded shadow-md hover:bg-purple-700"
             :to="localePath('/register')"
             >{{ $t("index.btn-register") }}</NuxtLink
           >
           <NuxtLink
-            class="font-extrabold text-indigo-600 hover:underline"
+            class="font-extrabold text-purple-600 hover:underline"
             :to="localePath('/about')"
             >{{ $t("index.link-howto") }}</NuxtLink
           >
@@ -74,39 +74,71 @@
             <div
               class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
             >
-              <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+              <h2 class="max-w-sm px-2 mx-auto text-right md:w-2/6">
                 {{ $t("raffles.code") }}
               </h2>
-              <div class="max-w-sm mx-auto md:w-3/4">
+              <div class="max-w-sm mx-auto md:w-4/6">
                 <div
-                  class="relative font-medium text-lg tracking-wider text-gray-900"
+                  class="relative text-gray-900 border-gray-400 border border-transparent rounded-md p-2 shadow-sm"
                 >
                   {{ raffle.code }}
+                  <i
+                    class="absolute inset-y-0 flex items-center fas fa-qrcode text-gray-500"
+                    style="right: 20px"
+                  />
                 </div>
               </div>
             </div>
             <div
               class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
             >
-              <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+              <h2 class="max-w-sm px-2 mx-auto text-right md:w-2/6">
                 {{ $t("raffles.liveUrl") }}
               </h2>
-              <div class="max-w-sm mx-auto md:w-3/4">
+              <div class="max-w-sm mx-auto md:w-4/6">
                 <div
-                  class="relative font-medium text-lg tracking-wider text-gray-900"
+                  class="relative text-gray-900 border-gray-400 border border-transparent rounded-md p-2 shadow-sm"
                 >
                   {{ raffle.liveUrl }}
+                  <i
+                    class="absolute inset-y-0 flex items-center fas fa-anchor text-gray-500"
+                    style="right: 20px"
+                  />
                 </div>
               </div>
             </div>
+            <!-- NickName -->
+            <div
+              class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+            >
+              <h2 class="max-w-sm px-2 mx-auto text-right md:w-2/6">
+                {{ $t("raffles.participants.nick-name") }}
+              </h2>
+              <div class="max-w-sm mx-auto md:w-4/6">
+                <div class="relative">
+                  <input
+                    v-model="participantNickName"
+                    type="text"
+                    required
+                    class="flex-1 w-full px-4 py-2 font-medium text-base text-gray-900 placeholder-gray-500 bg-white border border-transparent border-gray-400 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    :placeholder="$t('register.nickname-placeholder')"
+                  />
+                  <i
+                    class="absolute inset-y-0 flex items-center fas fa-user-secret"
+                    style="right: 20px"
+                  />
+                </div>
+              </div>
+            </div>
+
             <!-- EMail -->
             <div
               class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
             >
-              <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
+              <h2 class="max-w-sm px-2 mx-auto text-right md:w-2/6">
                 {{ $t("register.email") }}
               </h2>
-              <div class="max-w-sm mx-auto md:w-3/4">
+              <div class="max-w-sm mx-auto md:w-4/6">
                 <div class="relative">
                   <input
                     v-model="participantEmail"
@@ -153,6 +185,7 @@ export default Vue.extend({
     raffle: {} as Raffle,
     participant: {} as Participant,
     participantEmail: "",
+    participantNickName: "",
     showModal: false,
   }),
   methods: {
@@ -195,6 +228,7 @@ export default Vue.extend({
     },
     /** Register EMail in Participan List */
     async registerInRaffle() {
+      this.$emit("toogleLoading", true);
       //Check if user as entered before
       await this.$fire.firestore
         .collection("raffles")
@@ -220,8 +254,11 @@ export default Vue.extend({
                 icon: "fas fa-exclamation-triangle",
               }
             );
-
+            //Clear Inputs
             this.participantEmail = "";
+            this.participantNickName = "";
+
+            this.$emit("toogleLoading", false);
           } else {
             //Register participant
             try {
@@ -233,6 +270,7 @@ export default Vue.extend({
               raffleRef
                 .add({
                   email: this.participantEmail,
+                  nickName: this.participantNickName,
                   enterDate: this.$fireModule.firestore.Timestamp.now(),
                 })
                 .then((data) => {
@@ -247,7 +285,10 @@ export default Vue.extend({
                       icon: "fas fa-exclamation-info",
                     }
                   );
+                  //Clear Inputs
                   this.participantEmail = "";
+                  this.participantNickName = "";
+                  this.$emit("toogleLoading", false);
                   this.showModal = false;
                 });
             } catch (e) {

@@ -56,7 +56,10 @@
             ></path>
           </svg>
         </a>
-        <a>
+        <a
+          href="https://github.com/rgilsimoes/livestreamraffler/issues"
+          target="_blank"
+        >
           <svg
             class="w-6 h-6 text-indigo-600"
             fill="currentColor"

@@ -11,9 +11,13 @@
               :to="localePath('/members/raffles/create')"
               class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
             >
-              <i class="fas fa-plus pr-2" />Novo</NuxtLink
+              <i class="fas fa-plus pr-2" />{{
+                $t("raffles.btn-new")
+              }}</NuxtLink
             >
-            <div class="relative">
+            <!--
+              // TODO - Implement Search
+              <div class="relative">
               <input
                 type="text"
                 disabled
@@ -28,7 +32,7 @@
               disabled
             >
               <i class="fas fa-search pr-2" />Procurar
-            </button>
+            </button> -->
           </form>
         </div>
       </div>
@@ -41,31 +45,31 @@
                   scope="col"
                   class="px-5 py-3 text-sm font-bold text-left text-gray-800 bg-white border-b border-gray-200"
                 >
-                  Código
+                  {{ $t("raffles.code") }}
                 </th>
                 <th
                   scope="col"
                   class="px-5 py-3 text-sm font-bold text-left text-gray-800 bg-white border-b border-gray-200"
                 >
-                  Link
+                  {{ $t("raffles.liveUrl") }}
                 </th>
                 <th
                   scope="col"
                   class="px-5 py-3 text-sm font-bold text-center text-gray-800 bg-white border-b border-gray-200"
                 >
-                  Data
+                  {{ $t("raffles.create-date") }}
                 </th>
                 <th
                   scope="col"
                   class="px-5 py-3 text-sm font-bold text-center text-gray-800 bg-white border-b border-gray-200"
                 >
-                  Estado
+                  {{ $t("raffles.status-header") }}
                 </th>
                 <th
                   scope="col"
                   class="px-5 py-3 text-sm font-bold text-center text-gray-800 bg-white border-b border-gray-200"
                 >
-                  Participantes
+                  {{ $t("raffles.participants.participants") }}
                 </th>
                 <th
                   scope="col"
@@ -104,7 +108,8 @@
                   >
                     <span
                       aria-hidden="true"
-                      class="absolute inset-0 bg-green-200 rounded-full opacity-50"
+                      class="absolute inset-0 rounded-full opacity-50"
+                      :class="raffleStatus[raffle.status]"
                     >
                     </span>
                     <span class="relative">
@@ -133,7 +138,9 @@
                     class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
                     :to="localePath(`/members/raffles/${raffle.id}`)"
                   >
-                    <i class="fas fa-eye pr-2" />Ver</NuxtLink
+                    <i class="fas fa-eye pr-2" />{{
+                      $t("raffles.btn-view")
+                    }}</NuxtLink
                   >
                 </td>
               </tr>
@@ -168,6 +175,7 @@ export default Vue.extend({
   data: () => ({
     channelId: 0,
     searchStr: "",
+    raffleStatus: ["bg-green-200", "bg-yellow-200", "bg-red-200"],
   }),
   mounted() {
     this.$store.dispatch("datastore/getRaffles");

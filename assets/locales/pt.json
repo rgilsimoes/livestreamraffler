@@ -59,11 +59,17 @@
     "liveUrl": "URL da Live:",
     "view-raffle": "Sorteio",
     "btn-confirm": "Confirmar",
-    "participants": "Participantes",
+    "participants": {
+      "participants": "Participantes",
+      "email": "E-Mail",
+      "date": "Data",
+      "nick-name": "Nome:"
+    },
     "msgs": {
       "no-raffles-found": "Ainda não criaste nenhum sorteio!",
       "raffle-created": "Sorteio criado!",
-      "no-participants-found": "Ainda não há participantes!"
+      "no-participants-found": "Ainda não há participantes!",
+      "loading-participants": "A carregar participantes..."
     },
     "raffles-title": "Sorteios",
     "liveUrl-placeholder": "URL da Live",
@@ -74,7 +80,16 @@
     "create-date-placeholder": "Data Sorteio",
     "btn-raffle": "Sortear",
     "btn-cancelar": "Cancelar",
-    "status": ["Ativo", "Sorteado", "Cancelado"]
+    "status": [
+      "Ativo",
+      "Sorteado",
+      "Cancelado"
+    ],
+    "btn-new": "Novo",
+    "status-header": "Estado",
+    "btn-view": "Ver",
+    "draw-winners": "Sortear vencedores",
+    "btn-close": "Fechar"
   },
   "register": {
     "email": "O teu E-Mail:",
@@ -90,9 +105,10 @@
       "error-email-exists": "O e-mail já foi registado!<br>Efetue antes o login.",
       "error-password-mismatch": "As passwords não coincidem!"
     },
-    "channel-url": "\r\n            URL do canal:\r\n",
+    "channel-url": "URL do canal:",
     "channel-url-placeholder": "URL do canal das lives",
-    "confirmpassword": "Confirmação:"
+    "confirmpassword": "Confirmação:",
+    "nickname-placeholder": "Nome utilizador"
   },
   "account": {
     "account-data": "Dados da conta",
