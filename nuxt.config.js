@@ -58,7 +58,7 @@ export default {
   pwa: {
     // disable the modules you don't need
     meta: false,
-    icon: false,
+    icon: true,
     // if you omit a module key form configuration sensible defaults will be applied
     // manifest: false,
 
@@ -87,7 +87,7 @@ export default {
       storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "demo.appspot.com",
       messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
     },
-    onFirebaseHosting: process.env.NODE_ENV === "development" ? false : true,
+    onFirebaseHosting: process.env.NODE_ENV === "development" ? false : false,
     services: {
       auth: {
         persistence: true,
@@ -158,7 +158,7 @@ export default {
     seo: true,
     lazy: true,
     detectBrowserLanguage: {
-      alwaysRedirect: true,
+      alwaysRedirect: false,
       fallbackLocale: "pt",
       onlyOnRoot: true,
       useCookie: true,
