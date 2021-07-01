@@ -396,11 +396,3 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
-
-function mapGetters(arg0: { channelUser: (state: any) => any; }): import("vue/types/options").Accessors<unknown>|undefined {
-  throw new Error("Function not implemented.");
-}
-
-function mapGetters(arg0: { channelUser: (state: any) => any; }): import("vue/types/options").Accessors<unknown>|undefined {
-  throw new Error("Function not implemented.");
-}
