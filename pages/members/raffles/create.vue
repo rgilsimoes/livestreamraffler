@@ -125,13 +125,13 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import toastaction from "~/components/ui/toastaction.vue";
+import toastaction from "~/components/ui/toast-action.vue";
 import Raffle from "~/types/models/raffle";
 
 export default Vue.extend({
   name: "create-raffle",
   middleware: ["members"],
-  data: () => {
+  data() {
     return {
       userId: 0,
       channelId: 0,
@@ -146,7 +146,7 @@ export default Vue.extend({
       channelUser: (state: any) => state.channelUser,
     }),
   },
-  mounted: function () {
+  mounted() {
     this.generateOTC();
   },
   methods: {
@@ -187,6 +187,7 @@ export default Vue.extend({
             status: this.newRaffle.status,
             winners: this.newRaffle.winners,
             user: refUser,
+            uid: this.channelUser.uid,
             created_at: this.$fireModule.firestore.Timestamp.now(),
           })
           .then((data) => {

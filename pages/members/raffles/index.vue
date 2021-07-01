@@ -144,7 +144,7 @@
                   >
                 </td>
               </tr>
-              <tr v-if="!raffles">
+              <tr v-if="raffles.length == 0">
                 <td
                   class="px-5 py-5 text-sm bg-white border-b border-gray-200"
                   colspan="5"
@@ -165,21 +165,25 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState } from "vuex";
 
-import toastaction from "~/components/ui/toastaction.vue";
+import toastaction from "~/components/ui/toast-action.vue";
 
 export default Vue.extend({
   name: "raffles",
   middleware: ["members"],
-  data: () => ({
-    channelId: 0,
-    searchStr: "",
-    raffleStatus: ["bg-green-200", "bg-yellow-200", "bg-red-200"],
-  }),
-  mounted() {
+  data() {
+    return {
+      channelId: 0,
+      searchStr: "",
+      raffleStatus: ["bg-green-200", "bg-yellow-200", "bg-red-200"],
+    };
+  },
+
+  fetch() {
     this.$store.dispatch("datastore/getRaffles");
   },
+
   computed: {
     ...mapState({
       raffles: (state: any) => state.datastore.raffles,

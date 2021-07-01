@@ -1,12 +1,17 @@
 const ignorePaths = ["\u002F__webpack_hmr","\u002F_loading","\u002F_nuxt\u002F"]
 
-// Only works on Firebase hosting!
-importScripts('/__/firebase/8.3.3/firebase-app.js')
-importScripts('/__/firebase/8.3.3/firebase-auth.js')
-importScripts('/__/firebase/init.js')
+importScripts(
+  'https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js'
+)
+importScripts(
+  'https://www.gstatic.com/firebasejs/8.6.7/firebase-auth.js'
+)
+firebase.initializeApp({"apiKey":"AIzaSyCyK_ta-EMdTydst9bNw3H13TUNmM0xTAk","authDomain":"rafle.firebaseapp.com","databaseURL":"https:\u002F\u002Fyoutube-rafle.firebaseio.com","projectId":"youtube-rafle","appId":"1:890703150532:web:9b48157da5561e79547891","measurementId":"G-CGPC9C779V","storageBucket":"youtube-rafles.appspot.com","messagingSenderId":"890703150532"})
 
 // Initialize authService
 const authService = firebase.auth()
+
+authService.useEmulator('http://localhost:9099')
 
 /**
  * Returns a promise that resolves with an ID token if available.
@@ -69,8 +74,16 @@ self.addEventListener('fetch', (event) => {
     return path.test(url.pathname.slice(1))
   })
 
+  // https://github.com/nuxt-community/firebase-module/issues/465
   if (!expectsHTML || !isSameOrigin || !isHttps || isIgnored) {
-    event.respondWith(fetch(event.request))
+    if (event.request.url.startsWith('https://www.googleapis.com/identitytoolkit/')) {
+      event.respondWith(
+        fetch({
+          ...event.request,
+          ...{ url: event.request.url.replace(/https:\/\//, 'http://localhost:9099/') }
+        })
+      )
+    } else event.respondWith(fetch(event.request))
 
     return
   }

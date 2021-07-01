@@ -140,13 +140,13 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import toastaction from "~/components/ui/toastaction.vue";
+import toastaction from "~/components/ui/toast-action.vue";
 import User from "~/types/models/user";
 
 export default Vue.extend({
   name: "account",
   middleware: ["members"],
-  data: () => {
+  data() {
     return {
       userData: {
         email: "",

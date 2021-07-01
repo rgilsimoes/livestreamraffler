@@ -103,7 +103,7 @@ export default {
         //enablePersistence: true,
         emulatorPort: process.env.NODE_ENV === "development" ? 8080 : undefined
       },
-      //performance: true,
+      performance: true,
       analytics: true
     }
   },

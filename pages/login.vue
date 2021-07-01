@@ -137,16 +137,19 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapGetters, mapActions } from "vuex";
-import toastaction from "~/components/ui/toastaction.vue";
+import toastaction from "~/components/ui/toast-action.vue";
 
 export default Vue.extend({
   name: "login",
-  data: () => ({
-    formData: {
-      email: "",
-      password: "",
-    },
-  }),
+  data() {
+    return {
+      formData: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+
   computed: {
     ...mapState({
       authUser: (state: any) => state.authUser,

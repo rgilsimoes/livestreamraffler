@@ -174,20 +174,23 @@
 
 <script lang="ts">
 import Vue from "vue";
-import toastaction from "~/components/ui/toastaction.vue";
+import toastaction from "~/components/ui/toast-action.vue";
 import Raffle from "~/types/models/raffle";
 import Participant from "~/types/models/participant";
 
 export default Vue.extend({
   name: "index",
-  data: () => ({
-    raffleCode: "",
-    raffle: {} as Raffle,
-    participant: {} as Participant,
-    participantEmail: "",
-    participantNickName: "",
-    showModal: false,
-  }),
+  data() {
+    return {
+      raffleCode: "",
+      raffle: {} as Raffle,
+      participant: {} as Participant,
+      participantEmail: "",
+      participantNickName: "",
+      showModal: false,
+    };
+  },
+
   methods: {
     /** Check Raffle and Show Modal Participation Form */
     async checkRaffle() {

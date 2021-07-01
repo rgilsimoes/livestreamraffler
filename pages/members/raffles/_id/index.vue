@@ -149,7 +149,7 @@
           </div>
           <div class="inline-flex items-center space-x-4">
             <button
-              @click.prevent="loadParticipants"
+              @click="loadParticipants"
               type="button"
               class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-400 rounded shadow-md hover:bg-pink-800"
             >
@@ -159,8 +159,8 @@
         </div>
       </div>
 
-      <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-        <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
+      <div class="px-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
+        <div class="inline-block min-w-full overflow-hidden rounded-lg">
           <table class="min-w-full leading-normal">
             <thead>
               <tr>
@@ -193,18 +193,18 @@
                 v-for="participant in raffle.participants"
                 :key="participant.id"
               >
-                <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                <td class="px-5 py-2 text-sm bg-white border-b border-gray-200">
                   <p class="text-gray-900 whitespace-no-wrap">
                     {{ participant.nickName }}
                   </p>
                 </td>
-                <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                <td class="px-5 py-2 text-sm bg-white border-b border-gray-200">
                   <p class="text-gray-900 whitespace-no-wrap">
                     {{ participant.email }}
                   </p>
                 </td>
                 <td
-                  class="px-5 py-5 text-sm text-center bg-white border-b border-gray-200"
+                  class="px-5 py-2 text-sm text-center bg-white border-b border-gray-200"
                 >
                   <p class="text-gray-900 whitespace-no-wrap">
                     {{
@@ -215,7 +215,7 @@
                   </p>
                 </td>
                 <td
-                  class="px-5 py-5 text-sm text-center bg-white border-b border-gray-200"
+                  class="px-5 py-2 text-sm text-center bg-white border-b border-gray-200"
                 >
                   <button
                     type="button"
@@ -225,7 +225,7 @@
                   </button>
                 </td>
               </tr>
-              <tr v-if="!raffle.participants">
+              <tr v-if="!raffle.participants || raffle.participants == 0">
                 <td
                   class="px-5 py-5 text-sm bg-white border-b border-gray-200"
                   colspan="5"
@@ -243,7 +243,7 @@
     </div>
 
     <!-- Raffle participation modal form -->
-    <form>
+    <form @submit.prevent="drawWinners">
       <ui-modal
         v-if="showModal"
         @close="showModal = false"
@@ -251,21 +251,15 @@
       >
         <template v-slot:body>
           <div
-            class="flex items-center w-full p-2 space-y-4 text-gray-500 md:space-y-0"
+            class="flex flex-col items-center w-full p-2 space-y-4 text-gray-800 md:space-y-0"
           >
-            <h2 class="max-w-sm px-2 mx-auto text-right md:w-1/4">
-              {{ $t("raffles.code") }}
-            </h2>
-            <div class="max-w-sm mx-auto md:w-3/4">
-              <div
-                class="relative text-gray-900 border-gray-400 border border-transparent rounded-md p-2 shadow-sm"
-              >
-                <i
-                  class="absolute inset-y-0 flex items-center fas fa-calendar text-gray-500"
-                  style="right: 20px"
-                />
-              </div>
-            </div>
+            <h1 class="max-w-sm px-2 py-4 mx-auto text-2xl">
+              Sortear X vencedores
+            </h1>
+
+            <ul>
+              <li>ricardo.gil.simoes@gmail.com</li>
+            </ul>
           </div>
         </template>
         <template v-slot:footer>
@@ -273,7 +267,7 @@
             type="submit"
             class="px-5 py-2 text-white bg-pink-400 border border-transparent rounded-md group hover:bg-pink-800 focus:outline-none"
           >
-            {{ $t("raffles.btn-close") }}
+            Teste
           </button>
         </template>
       </ui-modal>
@@ -286,20 +280,19 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
-import toastaction from "~/components/ui/toastaction.vue";
+import { mapState, mapGetters } from "vuex";
+import toastaction from "~/components/ui/toast-action.vue";
 import Participant from "~/types/models/participant";
 import Raffle from "~/types/models/raffle";
 
 export default Vue.extend({
   name: "view-raffle",
   middleware: ["members"],
-  data: () => {
+  data() {
     return {
-      userId: 0,
-      channelId: 0,
       raffle: {
         code: "",
+        createdAt: new Date(),
       } as Raffle,
       showModal: false,
     };
@@ -309,20 +302,36 @@ export default Vue.extend({
       channelUser: (state: any) => state.channelUser,
       raffles: (state: any) => state.datastore.raffles,
     }),
+    ...mapGetters({
+      listRaffles: "datastore/listRaffles",
+    }),
   },
-  created() {
-    var tempRaffle = this.raffles.filter((raffle: Raffle) => {
-      return raffle.id == this.$route.params.id;
-    });
 
-    this.raffle = { ...tempRaffle[0] };
-    this.loadParticipants();
+  async fetch() {
+    await this.$store.dispatch("datastore/getRaffles");
   },
-  methods: {
-    async loadParticipants() {
+
+  watch: {
+    /**
+     *  Load current raffle passed by ID
+     */
+    async raffles(newRaffles) {
       this.$emit("toogleLoading", true);
+      var tempRaffle = this.listRaffles.filter((raffle: Raffle) => {
+        return raffle.id == this.$route.params.id;
+      });
 
-      //Load Participants
+      this.raffle = { ...tempRaffle[0] };
+      this.loadParticipants();
+    },
+  },
+
+  methods: {
+    /**
+     *  Load registered participants
+     */
+    async loadParticipants() {
+      this.$emit("toogleLoading", false);
       let participantsCol = Array<Participant>();
       try {
         await this.$fire.firestore
@@ -345,10 +354,16 @@ export default Vue.extend({
         this.raffle.participants = participantsCol;
         this.$emit("toogleLoading", false);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
+    /**
+     *  Load registered participants
+     */
     async drawWinners() {},
+    /**
+     *  Draw Random Winners
+     */
     getRandomWinners() {
       let winners = [];
       if (this.raffle.participants && this.raffle.winners) {
@@ -363,6 +378,8 @@ export default Vue.extend({
       }
       return winners;
     },
+    //TODO - Delete participant
+    //TODO - Cancel raffle
   },
 });
 </script>
@@ -379,3 +396,11 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
+
+function mapGetters(arg0: { channelUser: (state: any) => any; }): import("vue/types/options").Accessors<unknown>|undefined {
+  throw new Error("Function not implemented.");
+}
+
+function mapGetters(arg0: { channelUser: (state: any) => any; }): import("vue/types/options").Accessors<unknown>|undefined {
+  throw new Error("Function not implemented.");
+}

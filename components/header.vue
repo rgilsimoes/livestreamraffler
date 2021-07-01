@@ -20,7 +20,7 @@
             >
           </div>
           <!-- Top Menu -->
-          <div v-if="isLoggedIn" class="hidden md:block topMenu">
+          <div v-if="isLoggedIn" class="md:block topMenu">
             <div class="flex items-baseline ml-10">
               <NuxtLink
                 :to="localePath('/')"
@@ -71,7 +71,8 @@
                   <nuxt-link
                     :to="switchLocalePath(lang.code)"
                     class="items-baseline block px-4 py-2 whitespace-no-wrap bg-gray-200 hover:bg-gray-400"
-                    ><span
+                  >
+                    <span
                       :class="[
                         lang.flag,
                         'sm:hidden md:block flag small-flag rounded',
@@ -94,15 +95,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapGetters, mapMutations } from "vuex";
-import MobileMenu from "./mobilemenu.vue";
-import ProfileMenu from "./profilemenu.vue";
+import MobileMenu from "./mobile-menu.vue";
+import ProfileMenu from "./profile-menu.vue";
 import CountryFlag from "vue-country-flag";
 
 export default Vue.extend({
+  name: "Header",
   components: { ProfileMenu, MobileMenu, CountryFlag },
-  data() {
-    return {};
-  },
+
   computed: {
     ...mapState({
       // The Menu State
@@ -122,7 +122,7 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
 .dropdown:hover .dropdown-menu {
   display: block;
 }

@@ -149,6 +149,10 @@ export const actions = {
   //Toogle Menu
   toogleMenu(context) {
     context.commit("SET_OPEN_MENU", !context.state.isOpen);
+  },
+  //Close Menu
+  closeMenu(context) {
+    context.commit("SET_OPEN_MENU", false);
   }
 };
 

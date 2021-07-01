@@ -45,3 +45,12 @@ export const actions = {
     }
   }
 };
+
+/**
+ * Getters (ReadOnly)
+ */
+export const getters = {
+  listRaffles: state => {
+    return state.raffles;
+  }
+};

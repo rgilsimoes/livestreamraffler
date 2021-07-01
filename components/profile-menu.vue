@@ -3,6 +3,7 @@
     <div class="hidden md:block">
       <div class="flex items-center ml-4 md:ml-6 place-content-evenly">
         <!-- Notifications Bell -->
+        <!-- NOT IN USE -->
         <button
           class="hidden p-1 text-gray-400 border-2 border-transparent rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
           aria-label="Notificações"
@@ -129,8 +130,9 @@ import User from "~/types/models/user";
 
 export default Vue.extend({
   name: "ProfileMenu",
-  data: () => {
+  data() {
     return {
+      opened: false,
       userData: {
         name: "",
       } as User,
@@ -153,8 +155,21 @@ export default Vue.extend({
     ...mapActions({
       // Open/Close Menu
       toggle: "toogleMenu",
+      close: "closeMenu",
       logout: "logout",
     }),
+    //Close menu on click outside of it
+    closeMenu(evt: any) {
+      if (this.isOpen) {
+        if (!this.$el.contains(evt.target)) {
+          this.close();
+        }
+      }
+    },
+  },
+  mounted() {
+    //Assign click event to open menu check
+    document.addEventListener("click", this.closeMenu);
   },
 });
 </script>

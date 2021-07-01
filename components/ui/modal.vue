@@ -30,7 +30,7 @@
                   <slot name="body"><span v-html="content"></span></slot>
                 </p>
               </div>
-              <div class="px-5 py-3 modal-footer border0-t">
+              <div class="px-5 py-3 modal-footer border0-t items-center">
                 <slot name="footer"></slot>
               </div>
             </div>

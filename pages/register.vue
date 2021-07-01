@@ -156,12 +156,12 @@
 <script lang="ts">
 import Vue from "vue";
 
-import toastaction from "~/components/ui/toastaction.vue";
+import toastaction from "~/components/ui/toast-action.vue";
 import User from "~/types/models/user";
 
 export default Vue.extend({
   name: "register",
-  data: () => {
+  data() {
     return {
       newUser: {
         email: "",
