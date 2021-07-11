@@ -36,7 +36,7 @@
                 :placeholder="$t('raffles.code')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-qrcode"
+                class="absolute flex items-center fas fa-qrcode"
                 style="right: 20px"
               />
             </div>
@@ -62,7 +62,7 @@
                 :placeholder="$t('raffles.liveUrl')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-anchor"
+                class="absolute flex items-center fas fa-anchor"
                 style="right: 20px"
               />
             </div>
@@ -88,7 +88,7 @@
                 :placeholder="$t('raffles.winners-placeholder')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-gift"
+                class="absolute flex items-center fas fa-gift"
                 style="right: 20px"
               />
             </div>
@@ -106,7 +106,7 @@
             >
               {{ raffle.createdAt.toLocaleDateString($i18n.locale) }}
               <i
-                class="absolute inset-y-0 flex items-center fas fa-calendar text-gray-500"
+                class="absolute flex items-center fas fa-calendar text-gray-500"
                 style="right: 20px"
               />
             </div>
@@ -120,7 +120,7 @@
             class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
             <i
-              class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-hourglass"
+              class="absolute left-0 flex items-center pl-3 fas fa-hourglass"
             />
             {{ $t("raffles.btn-raffle") }}
           </button>
@@ -128,9 +128,7 @@
             type="submit"
             class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
-            <i
-              class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-ban"
-            />
+            <i class="absolute left-0 flex items-center pl-3 fas fa-ban" />
             {{ $t("raffles.btn-cancelar") }}
           </button>
         </div>

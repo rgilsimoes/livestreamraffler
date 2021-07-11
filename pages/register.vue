@@ -36,7 +36,7 @@
                 :placeholder="$t('register.email-placeholder')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-at"
+                class="absolute flex items-center fas fa-at"
                 style="right: 20px"
               />
             </div>
@@ -61,7 +61,7 @@
                 :placeholder="$t('register.name-placeholder')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-user"
+                class="absolute flex items-center fas fa-user"
                 style="right: 20px"
               />
             </div>
@@ -83,7 +83,7 @@
                 :placeholder="$t('register.channel-url-placeholder')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-anchor"
+                class="absolute flex items-center fas fa-anchor"
                 style="right: 20px"
               />
             </div>
@@ -106,7 +106,7 @@
                 :placeholder="$t('register.password-placeholder')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-key"
+                class="absolute flex items-center fas fa-key"
                 style="right: 20px"
               />
             </div>
@@ -129,7 +129,7 @@
                 :placeholder="$t('register.confirmpassword-placeholder')"
               />
               <i
-                class="absolute inset-y-0 flex items-center fas fa-key"
+                class="absolute flex items-center fas fa-key"
                 style="right: 20px"
               />
             </div>
@@ -142,9 +142,7 @@
             type="submit"
             class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
-            <i
-              class="absolute inset-y-0 left-0 flex items-center pl-3 fas fa-check"
-            />
+            <i class="absolute left-0 flex items-center pl-3 fas fa-check" />
             {{ $t("register.btn-confirm") }}
           </button>
         </div>

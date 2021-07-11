@@ -83,7 +83,7 @@
                 >
                   {{ raffle.code }}
                   <i
-                    class="absolute inset-y-0 flex items-center fas fa-qrcode text-gray-500"
+                    class="absolute flex items-center fas fa-qrcode text-gray-500"
                     style="right: 20px"
                   />
                 </div>
@@ -101,7 +101,7 @@
                 >
                   {{ raffle.liveUrl }}
                   <i
-                    class="absolute inset-y-0 flex items-center fas fa-anchor text-gray-500"
+                    class="absolute flex items-center fas fa-anchor text-gray-500"
                     style="right: 20px"
                   />
                 </div>
@@ -124,7 +124,7 @@
                     :placeholder="$t('register.nickname-placeholder')"
                   />
                   <i
-                    class="absolute inset-y-0 flex items-center fas fa-user-secret"
+                    class="absolute flex items-center fas fa-user-secret"
                     style="right: 20px"
                   />
                 </div>
@@ -148,7 +148,7 @@
                     :placeholder="$t('register.email-placeholder')"
                   />
                   <i
-                    class="absolute inset-y-0 flex items-center fas fa-at"
+                    class="absolute flex items-center fas fa-at"
                     style="right: 20px"
                   />
                 </div>
