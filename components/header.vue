@@ -44,7 +44,7 @@
             ><span class="hidden sm:block pr-4">{{
               $t("global.btn-login")
             }}</span>
-            <i class="fas fa-sign-in-alt" style="font-size: 24px" />
+            <i class="fas mt-2 fa-sign-in-alt" style="font-size: 24px" />
           </NuxtLink>
           <ProfileMenu v-else />
 

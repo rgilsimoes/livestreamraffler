@@ -83,7 +83,7 @@
                 >
                   {{ raffle.code }}
                   <i
-                    class="absolute flex items-center fas fa-qrcode text-gray-500"
+                    class="absolute flex items-center fas mt-2 fa-qrcode text-gray-500"
                     style="right: 20px"
                   />
                 </div>
@@ -101,7 +101,7 @@
                 >
                   {{ raffle.liveUrl }}
                   <i
-                    class="absolute flex items-center fas fa-anchor text-gray-500"
+                    class="absolute flex items-center fas mt-2 fa-anchor text-gray-500"
                     style="right: 20px"
                   />
                 </div>
@@ -124,7 +124,7 @@
                     :placeholder="$t('register.nickname-placeholder')"
                   />
                   <i
-                    class="absolute flex items-center fas fa-user-secret"
+                    class="absolute flex items-center fas mt-2 fa-user-secret"
                     style="right: 20px"
                   />
                 </div>
@@ -148,7 +148,7 @@
                     :placeholder="$t('register.email-placeholder')"
                   />
                   <i
-                    class="absolute flex items-center fas fa-at"
+                    class="absolute flex items-center fas mt-2 fa-at"
                     style="right: 20px"
                   />
                 </div>
@@ -218,7 +218,7 @@ export default Vue.extend({
                   },
                 },
                 {
-                  icon: "fas fa-exclamation-triangle",
+                  icon: "fas mt-2 fa-exclamation-triangle",
                 }
               );
             }
@@ -254,7 +254,7 @@ export default Vue.extend({
                 },
               },
               {
-                icon: "fas fa-exclamation-triangle",
+                icon: "fas mt-2 fa-exclamation-triangle",
               }
             );
             //Clear Inputs
@@ -285,7 +285,7 @@ export default Vue.extend({
                       },
                     },
                     {
-                      icon: "fas fa-exclamation-info",
+                      icon: "fas mt-2 fa-exclamation-info",
                     }
                   );
                   //Clear Inputs
@@ -304,7 +304,7 @@ export default Vue.extend({
                   },
                 },
                 {
-                  icon: "fas fa-exclamation-triangle",
+                  icon: "fas mt-2 fa-exclamation-triangle",
                 }
               );
             }

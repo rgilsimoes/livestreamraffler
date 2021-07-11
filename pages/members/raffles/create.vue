@@ -37,7 +37,7 @@
                 :placeholder="$t('raffles.code')"
               />
               <i
-                class="absolute flex items-center fas fa-qrcode"
+                class="absolute flex items-center fas mt-2 fa-qrcode"
                 style="right: 20px"
               />
             </div>
@@ -48,7 +48,7 @@
                 class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
               >
                 <i
-                  class="absolute left-0 flex items-center pl-3 fas fa-retweet"
+                  class="absolute left-0 flex items-center pl-3 fas mt-2 fa-retweet"
                 />
                 {{ $t("raffles.generate") }}
               </button>
@@ -73,7 +73,7 @@
                 :placeholder="$t('raffles.liveUrl-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-anchor"
+                class="absolute flex items-center fas mt-2 fa-anchor"
                 style="right: 20px"
               />
             </div>
@@ -98,7 +98,7 @@
                 :placeholder="$t('raffles.winners-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-gift"
+                class="absolute flex items-center fas mt-2 fa-gift"
                 style="right: 20px"
               />
             </div>
@@ -111,7 +111,9 @@
             type="submit"
             class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
-            <i class="absolute left-0 flex items-center pl-3 fas fa-check" />
+            <i
+              class="absolute left-0 flex items-center pl-3 fas mt-2 fa-check"
+            />
             {{ $t("raffles.btn-confirm") }}
           </button>
         </div>
@@ -197,7 +199,7 @@ export default Vue.extend({
                 },
               },
               {
-                icon: "fas fa-exclamation-info",
+                icon: "fas mt-2 fa-exclamation-info",
               }
             );
             this.$router.push(this.localePath(`/members/raffles/${data.id}`));
@@ -211,7 +213,7 @@ export default Vue.extend({
             },
           },
           {
-            icon: "fas fa-exclamation-triangle",
+            icon: "fas mt-2 fa-exclamation-triangle",
           }
         );
       }

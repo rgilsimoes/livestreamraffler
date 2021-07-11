@@ -47,7 +47,7 @@
                 :placeholder="$t('account.name-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-person"
+                class="absolute flex items-center fas mt-2 fa-person"
                 style="right: 20px"
               />
             </div>
@@ -69,7 +69,7 @@
                 :placeholder="$t('account.channel-url-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-anchor"
+                class="absolute flex items-center fas mt-2 fa-anchor"
                 style="right: 20px"
               />
             </div>
@@ -91,7 +91,7 @@
                 :placeholder="$t('account.password-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-key"
+                class="absolute flex items-center fas mt-2 fa-key"
                 style="right: 20px"
               />
             </div>
@@ -113,7 +113,7 @@
                 :placeholder="$t('account.confirm-password-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-key"
+                class="absolute flex items-center fas mt-2 fa-key"
                 style="right: 20px"
               />
             </div>
@@ -126,7 +126,9 @@
             type="submit"
             class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
-            <i class="absolute left-0 flex items-center pl-3 fas fa-check" />
+            <i
+              class="absolute left-0 flex items-center pl-3 fas mt-2 fa-check"
+            />
             {{ $t("account.btn-update") }}
           </button>
         </div>
@@ -197,7 +199,7 @@ export default Vue.extend({
                     },
                   },
                   {
-                    icon: "fas fa-exclamation-info",
+                    icon: "fas mt-2 fa-exclamation-info",
                   }
                 );
                 this.$router.push("/members/raffles");
@@ -223,7 +225,7 @@ export default Vue.extend({
             },
           },
           {
-            icon: "fas fa-exclamation-triangle",
+            icon: "fas mt-2 fa-exclamation-triangle",
           }
         );
       }

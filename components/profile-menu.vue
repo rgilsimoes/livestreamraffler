@@ -8,7 +8,7 @@
           class="hidden p-1 text-gray-400 border-2 border-transparent rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
           aria-label="Notificações"
         >
-          <i class="far fa-bell" />
+          <i class="far mt-2 fa-bell" />
         </button>
 
         <!-- Profile dropdown -->
@@ -61,14 +61,14 @@
                   to="/members/account"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
-                  ><span class="pr-3"><i class="fas fa-user" /></span
+                  ><span class="pr-3"><i class="fas mt-2 fa-user" /></span
                   >{{ $t("global.menu.profile") }}</NuxtLink
                 >
                 <NuxtLink
                   to="/members/settings"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
-                  ><span class="pr-3"><i class="fas fa-cog" /></span
+                  ><span class="pr-3"><i class="fas mt-2 fa-cog" /></span
                   >{{ $t("global.menu.settings") }}</NuxtLink
                 >
                 <a
@@ -76,7 +76,8 @@
                   v-on:click="logout"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
-                  ><span class="pr-3"><i class="fas fa-sign-out-alt" /></span
+                  ><span class="pr-3"
+                    ><i class="fas mt-2 fa-sign-out-alt" /></span
                   >{{ $t("global.menu.logout") }}</a
                 >
               </div>

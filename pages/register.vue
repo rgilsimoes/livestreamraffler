@@ -36,7 +36,7 @@
                 :placeholder="$t('register.email-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-at"
+                class="absolute flex items-center fas mt-2 fa-at"
                 style="right: 20px"
               />
             </div>
@@ -61,7 +61,7 @@
                 :placeholder="$t('register.name-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-user"
+                class="absolute flex items-center fas mt-2 fa-user"
                 style="right: 20px"
               />
             </div>
@@ -83,7 +83,7 @@
                 :placeholder="$t('register.channel-url-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-anchor"
+                class="absolute flex items-center fas mt-2 fa-anchor"
                 style="right: 20px"
               />
             </div>
@@ -106,7 +106,7 @@
                 :placeholder="$t('register.password-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-key"
+                class="absolute flex items-center fas mt-2 fa-key"
                 style="right: 20px"
               />
             </div>
@@ -129,7 +129,7 @@
                 :placeholder="$t('register.confirmpassword-placeholder')"
               />
               <i
-                class="absolute flex items-center fas fa-key"
+                class="absolute flex items-center fas mt-2 fa-key"
                 style="right: 20px"
               />
             </div>
@@ -142,7 +142,9 @@
             type="submit"
             class="relative flex justify-center w-full px-4 py-2 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
-            <i class="absolute left-0 flex items-center pl-3 fas fa-check" />
+            <i
+              class="absolute left-0 flex items-center pl-3 fas mt-2 fa-check"
+            />
             {{ $t("register.btn-confirm") }}
           </button>
         </div>
@@ -185,7 +187,7 @@ export default Vue.extend({
             },
           },
           {
-            icon: "fas fa-exclamation-triangle",
+            icon: "fas mt-2 fa-exclamation-triangle",
           }
         );
         return;
@@ -219,7 +221,7 @@ export default Vue.extend({
                       },
                     },
                     {
-                      icon: "fas fa-exclamation-info",
+                      icon: "fas mt-2 fa-exclamation-info",
                     }
                   );
                   this.$router.push("/members/raffles");
@@ -247,7 +249,7 @@ export default Vue.extend({
                 },
               },
               {
-                icon: "fas fa-exclamation-triangle",
+                icon: "fas mt-2 fa-exclamation-triangle",
               }
             );
           });
@@ -260,7 +262,7 @@ export default Vue.extend({
             },
           },
           {
-            icon: "fas fa-exclamation-triangle",
+            icon: "fas mt-2 fa-exclamation-triangle",
           }
         );
       }

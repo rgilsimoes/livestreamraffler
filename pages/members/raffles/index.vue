@@ -11,7 +11,7 @@
               :to="localePath('/members/raffles/create')"
               class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
             >
-              <i class="fas fa-plus pr-2" />{{
+              <i class="fas mt-2 fa-plus pr-2" />{{
                 $t("raffles.btn-new")
               }}</NuxtLink
             >
@@ -31,7 +31,7 @@
               type="submit"
               disabled
             >
-              <i class="fas fa-search pr-2" />Procurar
+              <i class="fas mt-2 fa-search pr-2" />Procurar
             </button> -->
           </form>
         </div>
@@ -138,7 +138,7 @@
                     class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-pink-700 rounded shadow-md hover:bg-golden-600 focus:outline-none focus:text-white focus:bg-gray-700"
                     :to="localePath(`/members/raffles/${raffle.id}`)"
                   >
-                    <i class="fas fa-eye pr-2" />{{
+                    <i class="fas mt-2 fa-eye pr-2" />{{
                       $t("raffles.btn-view")
                     }}</NuxtLink
                   >

@@ -36,7 +36,7 @@
               class="relative block w-full px-3 py-2 font-medium text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-lg"
             />
             <i
-              class="absolute flex items-center text-gray-500 fas fa-at"
+              class="absolute flex items-center text-gray-500 fas mt-2 fa-at"
               style="right: 20px"
             />
           </div>
@@ -54,7 +54,7 @@
               class="relative block w-full px-3 py-2 my-1 font-medium text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-lg"
             />
             <i
-              class="absolute flex items-center text-gray-500 fas fa-key"
+              class="absolute flex items-center text-gray-500 fas mt-2 fa-key"
               style="right: 20px"
             />
           </div>
@@ -88,7 +88,9 @@
             type="submit"
             class="relative flex justify-center w-full px-4 py-3 mr-5 font-medium text-white border border-transparent rounded-md bg-golden-500 group hover:bg-golden-800 focus:outline-none"
           >
-            <i class="absolute left-0 flex items-center pl-3 fas fa-lock" />
+            <i
+              class="absolute left-0 flex items-center pl-3 fas mt-2 fa-lock"
+            />
             {{ $t("login.login") }}
           </button>
           <button
@@ -96,7 +98,7 @@
           >
             <NuxtLink :to="localePath('/register')">
               <i
-                class="absolute left-0 flex items-center pl-3 fas fa-user-plus"
+                class="absolute left-0 flex items-center pl-3 fas mt-2 fa-user-plus"
               />
               {{ $t("login.register") }}
             </NuxtLink>
@@ -109,7 +111,7 @@
             @click="googleSignIn"
             class="m-3 px-4 py-3 border-2 w-full text-gray-700 rounded-md hover:text-white hover:bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
           >
-            <i class="fab fa-google pr-3"></i>
+            <i class="fab mt-2 fa-google pr-3"></i>
             {{ $t("login.btn-login-google") }}
           </button>
         </div>
@@ -179,7 +181,7 @@ export default Vue.extend({
               },
               {
                 hideProgressBar: true,
-                icon: "fas fa-info-circle",
+                icon: "fas mt-2 fa-info-circle",
               }
             );
           });
@@ -194,7 +196,7 @@ export default Vue.extend({
             },
           },
           {
-            icon: "fas fa-exclamation-triangle",
+            icon: "fas mt-2 fa-exclamation-triangle",
           }
         );
       }
@@ -228,7 +230,7 @@ export default Vue.extend({
                   },
                 },
                 {
-                  icon: "fas fa-exclamation-info",
+                  icon: "fas mt-2 fa-exclamation-info",
                 }
               );
             });
@@ -243,7 +245,7 @@ export default Vue.extend({
             },
             {
               hideProgressBar: true,
-              icon: "fas fa-info-circle",
+              icon: "fas mt-2 fa-info-circle",
             }
           );
         }
